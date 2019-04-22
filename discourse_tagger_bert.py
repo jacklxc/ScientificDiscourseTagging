@@ -6,7 +6,6 @@ import argparse
 import json
 import pickle
 
-from rep_reader import RepReader
 from util import read_passages_original as read_passages
 from util import evaluate, make_folds, clean_words, to_BIO, from_BIO, test_f1,from_BIO_ind
 
@@ -281,9 +280,8 @@ class PassageTagger(object):
         return f_mean, f_std, original_f_mean, original_f_std
 
 if __name__ == "__main__":
-    argparser = argparse.ArgumentParser(description="Train, cross-validate and run LSTM discourse tagger")
+    argparser = argparse.ArgumentParser()
     argparser.add_argument('--repfile', type=str, help="Word embedding file")
-    argparser.add_argument('--test_repfile', type=str, help="Gzipped word embedding file")
     argparser.add_argument('--train_file', type=str, help="Training file. One clause<tab>label per line and passages separated by blank lines.")
     argparser.add_argument('--cv', help="Do cross validation", action='store_true')
     argparser.add_argument('--test_files', metavar="TESTFILE", type=str, nargs='+', help="Test file name(s), separated by space. One clause per line and passages separated by blank lines.")
@@ -322,7 +320,6 @@ if __name__ == "__main__":
     args = argparser.parse_args()
     reset_random_seed(12345) 
     repfile = args.repfile
-    test_repfile = args.test_repfile
     if args.train_file:
         trainfile = args.train_file
         train = True
@@ -404,7 +401,7 @@ if __name__ == "__main__":
             test_out_file_name = "predictions/"+test_file.split("/")[-1].replace(".txt", "")+model_name+".out"
             #test_out_file_name = test_file.split("/")[-1].replace(".txt", "")+"fine_att=%s_cont=%s_lstm=%s_bi=%s_crf=%s"%(str(use_attention), att_context, str(lstm), str(bid), str(crf))+".out"
             outfile = open(test_out_file_name, "w")
-            X_test = nnt.load_bert(test_repfile,maxseqlen=maxseqlen, maxclauselen=maxclauselen)
+            X_test = nnt.load_bert(repfile,maxseqlen=maxseqlen, maxclauselen=maxclauselen)
             test_seq_lengths, Y_test = nnt.make_data(test_file, use_attention, maxseqlen=maxseqlen, maxclauselen=maxclauselen, label_ind=label_ind, train=True)
             if X_test.shape[0]>Y_test.shape[0]:
                 X_test=X_test[:-1] # Fix the size mismatch problem caused by a blank line.

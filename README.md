@@ -5,6 +5,7 @@ This is a discourse tagger that tags each clause in a given paragraph from a bio
 If you have any question, please contact xiangcil@usc.edu.
 
 ## Requirements
+* Python 3
 * Tensorflow (tested with v1.12, either gpu or non-gpu version is fine)
 * Keras (tested with v2.2.4, either gpu or non-gpu version is fine)
 * Scikit-learn
