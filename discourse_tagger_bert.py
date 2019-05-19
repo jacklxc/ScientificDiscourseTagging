@@ -20,7 +20,7 @@ from keras.layers import Input, LSTM, GRU, Dense, Dropout, TimeDistributed, Bidi
 from keras.callbacks import EarlyStopping,LearningRateScheduler
 from keras.optimizers import Adam, RMSprop, SGD
 from crf import CRF
-from attention import TensorAttention, DiscourseAttention
+from attention import TensorAttention
 from custom_layers import HigherOrderTimeDistributedDense
 import random
 def reset_random_seed(seed):
@@ -32,7 +32,7 @@ class PassageTagger(object):
     def __init__(self):
         self.tagger = None
 
-    def load_bert(self, bertfile, maxseqlen=None, maxclauselen=None):
+    def load_bert(self, bertfile, use_attention=True, maxseqlen=None, maxclauselen=None):
         with open(bertfile, 'rb') as f:
             u = pickle._Unpickler(f)
             u.encoding = 'latin1'
@@ -60,6 +60,8 @@ class PassageTagger(object):
                     sentence_embedding = sentence_embedding[-maxclauselen:,:]
                     n_word = maxclauselen
                 X[para_i,-seq_len+discourse_i,-n_word:,:] = sentence_embedding
+        if use_attention:
+            X = np.max(X,axis=2)
         return X
 
     def make_data(self, trainfilename, use_attention, maxseqlen=None, maxclauselen=None, label_ind=None, train=False):
@@ -360,7 +362,7 @@ if __name__ == "__main__":
         nnt = PassageTagger()
         if repfile:
             print("Using embedding weight to find embeddings.")
-            X = nnt.load_bert(repfile)
+            X = nnt.load_bert(repfile, use_attention = use_attention)
             _, Y = nnt.make_data(trainfile, use_attention, train=True)
             if X.shape[0]>Y.shape[0]:
                 X=X[:-1] # Fix the size mismatch problem caused by a blank line.
@@ -401,7 +403,7 @@ if __name__ == "__main__":
             test_out_file_name = "predictions/"+test_file.split("/")[-1].replace(".txt", "")+model_name+".out"
             #test_out_file_name = test_file.split("/")[-1].replace(".txt", "")+"fine_att=%s_cont=%s_lstm=%s_bi=%s_crf=%s"%(str(use_attention), att_context, str(lstm), str(bid), str(crf))+".out"
             outfile = open(test_out_file_name, "w")
-            X_test = nnt.load_bert(repfile,maxseqlen=maxseqlen, maxclauselen=maxclauselen)
+            X_test = nnt.load_bert(repfile, use_attention=use_attention, maxseqlen=maxseqlen, maxclauselen=maxclauselen)
             test_seq_lengths, Y_test = nnt.make_data(test_file, use_attention, maxseqlen=maxseqlen, maxclauselen=maxclauselen, label_ind=label_ind, train=True)
             if X_test.shape[0]>Y_test.shape[0]:
                 X_test=X_test[:-1] # Fix the size mismatch problem caused by a blank line.

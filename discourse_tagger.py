@@ -21,7 +21,7 @@ from keras.layers import Input, LSTM, GRU, Dense, Dropout, TimeDistributed, Bidi
 from keras.callbacks import EarlyStopping,LearningRateScheduler
 from keras.optimizers import Adam, RMSprop, SGD
 from crf import CRF
-from attention import TensorAttention, DiscourseAttention
+from attention import TensorAttention
 from custom_layers import HigherOrderTimeDistributedDense
 
 def reset_random_seed(seed):
@@ -88,7 +88,7 @@ class PassageTagger(object):
                             clause_rep = clause_rep[:maxclauselen]
                         x[-seq_len+i][-len(clause_rep):] = clause_rep
                     else:
-                        x[-seq_len+i] = np.mean(clause_rep, axis=0)
+                        x[-seq_len+i] = np.max(clause_rep, axis=0)
                     y_ind[-seq_len+i] = self.label_ind[label]
                 X.append(x)
                 Y_inds.append(y_ind)
