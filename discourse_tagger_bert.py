@@ -60,7 +60,7 @@ class PassageTagger(object):
                     sentence_embedding = sentence_embedding[-maxclauselen:,:]
                     n_word = maxclauselen
                 X[para_i,-seq_len+discourse_i,-n_word:,:] = sentence_embedding
-        if use_attention:
+        if not use_attention:
             X = np.max(X,axis=2)
         return X
 
@@ -283,7 +283,8 @@ class PassageTagger(object):
 
 if __name__ == "__main__":
     argparser = argparse.ArgumentParser()
-    argparser.add_argument('--repfile', type=str, help="Word embedding file")
+    argparser.add_argument('--repfile', type=str, help="Cached training BERT pkl file")
+    argparser.add_argument('--test_repfile', type=str, help="Cached test BERT pkl file")
     argparser.add_argument('--train_file', type=str, help="Training file. One clause<tab>label per line and passages separated by blank lines.")
     argparser.add_argument('--cv', help="Do cross validation", action='store_true')
     argparser.add_argument('--test_files', metavar="TESTFILE", type=str, nargs='+', help="Test file name(s), separated by space. One clause per line and passages separated by blank lines.")
@@ -322,6 +323,7 @@ if __name__ == "__main__":
     args = argparser.parse_args()
     reset_random_seed(12345) 
     repfile = args.repfile
+    test_repfile = args.test_repfile
     if args.train_file:
         trainfile = args.train_file
         train = True
@@ -356,7 +358,7 @@ if __name__ == "__main__":
     validation_split = float(args.validation_split)
     model_name = "bert_att=%s_cont=%s_lstm=%s_bi=%s_crf=%s_K=%s_lr=%s_embed_drop=%s_high_dense_drop=%s_att_drop=%s_lstm_dropout=%s_wd_prj_dim=%s_lstm_dim=%s_att_pro_dim=%s_rec_hid_dim=%s_epoch=%s_save=%s"%(str(use_attention), att_context, str(lstm), str(bid),str(crf),str(hard_k),str(lr),str(embedding_dropout),str(high_dense_dropout),str(attention_dropout),str(lstm_dropout),str(word_proj_dim),str(lstm_dim),str(att_proj_dim),str(rec_hid_dim),str(epoch),str(save))
     print(model_name)
-
+    f_mean, f_std, original_f_mean, original_f_std = 0,0,0,0
     if train:
         # First returned value is sequence lengths (without padding)
         nnt = PassageTagger()
@@ -402,7 +404,7 @@ if __name__ == "__main__":
             test_out_file_name = "predictions/"+test_file.split("/")[-1].replace(".txt", "")+model_name+".out"
             #test_out_file_name = test_file.split("/")[-1].replace(".txt", "")+"fine_att=%s_cont=%s_lstm=%s_bi=%s_crf=%s"%(str(use_attention), att_context, str(lstm), str(bid), str(crf))+".out"
             outfile = open(test_out_file_name, "w")
-            X_test = nnt.load_bert(repfile, use_attention=use_attention, maxseqlen=maxseqlen, maxclauselen=maxclauselen)
+            X_test = nnt.load_bert(test_repfile, use_attention=use_attention, maxseqlen=maxseqlen, maxclauselen=maxclauselen)
             test_seq_lengths, Y_test = nnt.make_data(test_file, use_attention, maxseqlen=maxseqlen, maxclauselen=maxclauselen, label_ind=label_ind, train=True)
             if X_test.shape[0]>Y_test.shape[0]:
                 X_test=X_test[:-1] # Fix the size mismatch problem caused by a blank line.
