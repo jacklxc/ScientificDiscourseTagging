@@ -359,7 +359,7 @@ if __name__ == "__main__":
     validation_split = float(args.validation_split)
     model_name = "att=%s_cont=%s_lstm=%s_bi=%s_crf=%s_hardK=%s_lr=%s_embedding_dropout=%s_high_dense_dropout=%s_attention_dropout=%s_lstm_dropout=%s_word_proj_dim=%s_lstm_dim=%s_att_pro_dim=%s_rec_hid_dim=%s_epoch=%s_save=%s"%(str(use_attention), att_context, str(lstm), str(bid),str(crf),str(hard_k),str(lr),str(embedding_dropout),str(high_dense_dropout),str(attention_dropout),str(lstm_dropout),str(word_proj_dim),str(lstm_dim),str(att_proj_dim),str(rec_hid_dim),str(epoch),str(save))
     print(model_name)
-
+    f_mean, f_std, original_f_mean, original_f_std = 0,0,0,0
     if train:
         # First returned value is sequence lengths (without padding)
         nnt = PassageTagger(word_rep_file=repfile)
@@ -391,8 +391,7 @@ if __name__ == "__main__":
             label_ind = {k: int(label_ind_json[k]) for k in label_ind_json}
             print("Loaded label index:", label_ind)
         if not use_attention:
-            assert "time_distributed_1" in nnt.tagger.layers[0].name
-            maxseqlen = nnt.tagger.layers[0].get_config()["batch_input_shape"][1]
+            maxseqlen = nnt.tagger.inputs[0].shape[1]
             maxclauselen = None
         else:
             for l in nnt.tagger.layers:
@@ -405,6 +404,7 @@ if __name__ == "__main__":
             test_out_file_name = "predictions/"+test_file.split("/")[-1].replace(".txt", "")+model_name+".out"
             #test_out_file_name = test_file.split("/")[-1].replace(".txt", "")+"fine_att=%s_cont=%s_lstm=%s_bi=%s_crf=%s"%(str(use_attention), att_context, str(lstm), str(bid), str(crf))+".out"
             outfile = open(test_out_file_name, "w")
+            print("maxseqlen", maxseqlen)
             test_seq_lengths, X_test, Y_test = nnt.make_data(test_file, use_attention, maxseqlen=maxseqlen, maxclauselen=maxclauselen, label_ind=label_ind, train=True)
             pred_probs, pred_label_seqs, _ = nnt.predict(X_test, test_seq_lengths)
             

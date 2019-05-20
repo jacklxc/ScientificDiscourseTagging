@@ -389,8 +389,7 @@ if __name__ == "__main__":
             label_ind = {k: int(label_ind_json[k]) for k in label_ind_json}
             print("Loaded label index:", label_ind)
         if not use_attention:
-            assert "time_distributed_1" in nnt.tagger.layers[0].name
-            maxseqlen = nnt.tagger.layers[0].get_config()["batch_input_shape"][1]
+            maxseqlen = nnt.tagger.inputs[0].shape[1]
             maxclauselen = None
         else:
             for l in nnt.tagger.layers:
