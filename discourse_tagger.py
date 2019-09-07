@@ -7,7 +7,7 @@ import json
 import pickle
 
 from rep_reader import RepReader
-from util import read_passages_original as read_passages 
+from util import read_passages 
 from util import evaluate, make_folds, clean_words, test_f1, to_BIO, from_BIO, from_BIO_ind
 
 import tensorflow as tf
@@ -17,7 +17,7 @@ K.set_session(sess)
 from keras.activations import softmax
 from keras.regularizers import l2
 from keras.models import Sequential, model_from_json
-from keras.layers import Input, LSTM, GRU, Dense, Dropout, TimeDistributed, Bidirectional,Masking
+from keras.layers import LSTM, Dense, Dropout, TimeDistributed, Bidirectional
 from keras.callbacks import EarlyStopping,LearningRateScheduler
 from keras.optimizers import Adam, RMSprop, SGD
 from crf import CRF
@@ -36,10 +36,8 @@ class PassageTagger(object):
             self.rep_reader = RepReader(word_rep_file)
         self.input_size = self.rep_reader.rep_shape[0]
         self.tagger = None
-
+    
     def make_data(self, trainfilename, use_attention, maxseqlen=None, maxclauselen=None, label_ind=None, train=False):
-        # list of list
-        print("Reading data")
         str_seqs, label_seqs = read_passages(trainfilename, is_labeled=train)
         print("Filtering data")
         str_seqs = clean_words(str_seqs)
@@ -80,7 +78,7 @@ class PassageTagger(object):
                 seq_len = maxseqlen
             if train:
                 for i, (clause, label) in enumerate(zip(str_seq, label_seq)):
-                    clause_rep = self.rep_reader.get_clause_rep(clause) # Makes embedding non-trainable from the beginning.
+                    clause_rep = self.rep_reader.get_clause_rep(clause.lower()) # Makes embedding non-trainable from the beginning.
                     for word in clause.split():
                         all_word_types.add(word) # Vocab
                     if use_attention:
@@ -94,7 +92,7 @@ class PassageTagger(object):
                 Y_inds.append(y_ind)
             else:
                 for i, clause in enumerate(str_seq):
-                    clause_rep = self.rep_reader.get_clause_rep(clause)
+                    clause_rep = self.rep_reader.get_clause_rep(clause.lower())
                     for word in clause.split():
                         all_word_types.add(word)
                     if use_attention:
@@ -116,7 +114,7 @@ class PassageTagger(object):
         self.rev_label_ind = {i: l for (l, i) in self.label_ind.items()}
         return seq_lengths, np.asarray(X), np.asarray(Y) # One-hot representation of labels
 
-    def predict(self, X, test_seq_lengths=None, tagger=None):
+    def predict(self, X, test_seq_lengths=None, tagger=None, batch_size=None):
         if not tagger:
             tagger = self.tagger
         if test_seq_lengths is None:
@@ -131,7 +129,7 @@ class PassageTagger(object):
                 x_lens.append(x_len)
         else:
                 x_lens = test_seq_lengths
-        pred_probs = tagger.predict(X)
+        pred_probs = tagger.predict(X, batch_size=batch_size)
         pred_inds = np.argmax(pred_probs, axis=2)
         pred_label_seqs = []
         for pred_ind, x_len in zip(pred_inds, x_lens):
@@ -219,7 +217,7 @@ class PassageTagger(object):
 
             for fold_num, ((train_fold_X, train_fold_Y), (test_fold_X, test_fold_Y)) in enumerate(cv_folds):
                 self.tagger = self.fit_model(train_fold_X, train_fold_Y, use_attention, att_context, lstm, bidirectional, crf,embedding_dropout=embedding_dropout, high_dense_dropout=high_dense_dropout, attention_dropout=attention_dropout, lstm_dropout = lstm_dropout, word_proj_dim=word_proj_dim,lr=lr,epoch=epoch, batch_size=batch_size, hard_k=hard_k, att_proj_dim = att_proj_dim, rec_hid_dim = rec_hid_dim, lstm_dim=lstm_dim, validation_split=validation_split)
-                pred_probs, pred_label_seqs, x_lens = self.predict(test_fold_X, tagger=self.tagger)
+                pred_probs, pred_label_seqs, x_lens = self.predict(test_fold_X, tagger=self.tagger, batch_size=batch_size)
                 # Free the tagger from memory.
                 del self.tagger
                 K.clear_session()
@@ -321,6 +319,14 @@ if __name__ == "__main__":
     argparser.add_argument('--validation_split', help="validation_split")
     argparser.set_defaults(validation_split=0.1)
     argparser.add_argument('--save', help="Whether save the model or not",action='store_true')
+    argparser.add_argument('--maxseqlen', help="max number of clauses per paragraph")
+    argparser.set_defaults(maxseqlen=40)
+    argparser.add_argument('--maxclauselen', help="max number of words per clause")
+    argparser.set_defaults(maxclauselen=60)
+    argparser.add_argument('--outpath', help="path of output labels")
+    argparser.set_defaults(outpath="./")
+    argparser.add_argument('--batch_size', help="batch size")
+    argparser.set_defaults(batch_size=10)
     
     args = argparser.parse_args()
     reset_random_seed(12345) # Good for word attention
@@ -355,9 +361,17 @@ if __name__ == "__main__":
     att_proj_dim = int(args.att_proj_dim)
     rec_hid_dim = int(args.rec_hid_dim)
     epoch = int(args.epoch)
+    maxseqlen = int(args.maxseqlen)
+    maxclauselen = int(args.maxclauselen)
+    batch_size=int(args.batch_size)
+    if maxseqlen <= 0:
+        maxseqlen = None
+    if maxclauselen <= 0:
+        maxclauselen = None
+    
     save = args.save
     validation_split = float(args.validation_split)
-    model_name = "att=%s_cont=%s_lstm=%s_bi=%s_crf=%s_hardK=%s_lr=%s_embedding_dropout=%s_high_dense_dropout=%s_attention_dropout=%s_lstm_dropout=%s_word_proj_dim=%s_lstm_dim=%s_att_pro_dim=%s_rec_hid_dim=%s_epoch=%s_save=%s"%(str(use_attention), att_context, str(lstm), str(bid),str(crf),str(hard_k),str(lr),str(embedding_dropout),str(high_dense_dropout),str(attention_dropout),str(lstm_dropout),str(word_proj_dim),str(lstm_dim),str(att_proj_dim),str(rec_hid_dim),str(epoch),str(save))
+    model_name = "att=%s_cont=%s_lstm=%s_bi=%s_crf=%s"%(str(use_attention), att_context, str(lstm), str(bid),str(crf))
     print(model_name)
     f_mean, f_std, original_f_mean, original_f_std = 0,0,0,0
     if train:
@@ -365,10 +379,10 @@ if __name__ == "__main__":
         nnt = PassageTagger(word_rep_file=repfile)
         if repfile:
             print("Using embedding weight to find embeddings.")
-            _, X, Y = nnt.make_data(trainfile, use_attention, train=True)
+            _, X, Y = nnt.make_data(trainfile, use_attention, maxseqlen=maxseqlen, maxclauselen=maxclauselen, train=True)
         else:
             assert(0)
-        f_mean, f_std, original_f_mean, original_f_std = nnt.train(X, Y, use_attention, att_context, lstm, bid, cv=args.cv,  crf=crf,save=save,embedding_dropout=embedding_dropout, high_dense_dropout=high_dense_dropout, attention_dropout=attention_dropout, lstm_dropout = lstm_dropout, word_proj_dim=word_proj_dim,lr=lr,epoch=epoch, hard_k=hard_k, lstm_dim = lstm_dim, rec_hid_dim=rec_hid_dim, att_proj_dim=att_proj_dim, validation_split=validation_split)
+        f_mean, f_std, original_f_mean, original_f_std = nnt.train(X, Y, use_attention, att_context, lstm, bid, cv=args.cv,  crf=crf,save=save,embedding_dropout=embedding_dropout, high_dense_dropout=high_dense_dropout, attention_dropout=attention_dropout, lstm_dropout = lstm_dropout, word_proj_dim=word_proj_dim,lr=lr,epoch=epoch, hard_k=hard_k, lstm_dim = lstm_dim, rec_hid_dim=rec_hid_dim, att_proj_dim=att_proj_dim, validation_split=validation_split, batch_size=batch_size)
     if test:
         if train:
             label_ind = nnt.label_ind
@@ -402,24 +416,16 @@ if __name__ == "__main__":
         for test_file in testfiles:
             print("Predicting on file %s"%(test_file))
             test_out_file_name = "predictions/"+test_file.split("/")[-1].replace(".txt", "")+model_name+".out"
-            #test_out_file_name = test_file.split("/")[-1].replace(".txt", "")+"fine_att=%s_cont=%s_lstm=%s_bi=%s_crf=%s"%(str(use_attention), att_context, str(lstm), str(bid), str(crf))+".out"
+            #test_out_file_name = args.outpath+test_file.split("/")[-1].replace(".txt", "")+"_GloVe"+".out"
             outfile = open(test_out_file_name, "w")
             print("maxseqlen", maxseqlen)
-            test_seq_lengths, X_test, Y_test = nnt.make_data(test_file, use_attention, maxseqlen=maxseqlen, maxclauselen=maxclauselen, label_ind=label_ind, train=True)
-            pred_probs, pred_label_seqs, _ = nnt.predict(X_test, test_seq_lengths)
-            
+      
+            test_seq_lengths, X_test, Y_test = nnt.make_data(test_file, use_attention, maxseqlen=maxseqlen, maxclauselen=maxclauselen, label_ind=label_ind, train=False)
+            pred_probs, pred_label_seqs, _ = nnt.predict(X_test, test_seq_lengths, batch_size=batch_size)
+                
             pred_label_seqs = from_BIO(pred_label_seqs)
             for pred_label_seq in pred_label_seqs:
                 for pred_label in pred_label_seq:
                     print(pred_label,file = outfile)
                 print("",file = outfile)
-            f1 = test_f1(test_file,pred_label_seqs)
-            with open("glove_records.tsv","a") as f:
-                embedding_dim = list(nnt.rep_reader.word_rep.values())[0].shape[0]
-                batch_size = 10
-                settings = [validation_split,embedding_dim, use_attention, att_context, lstm, bid, crf, hard_k, embedding_dropout, high_dense_dropout, attention_dropout, lstm_dropout, word_proj_dim,lstm_dim,att_proj_dim,rec_hid_dim,lr,epoch, batch_size,f_mean,f_std,original_f_mean,original_f_std, f1]
-                to_write = ""
-                for element in settings:
-                    to_write += str(element)
-                    to_write += "\t"
-                f.write(to_write[:-1]+"\n")
+

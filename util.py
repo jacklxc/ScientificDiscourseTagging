@@ -5,7 +5,7 @@ import glob
 import re
 from sklearn.metrics import f1_score
 
-def read_passages_original(filename, is_labeled):
+def read_passages(filename, is_labeled):
     str_seqs = []
     str_seq = []
     label_seqs = []
@@ -30,31 +30,6 @@ def read_passages_original(filename, is_labeled):
         str_seq = []
         label_seqs.append(label_seq)
         label_seq = []
-    return str_seqs, label_seqs
-
-def read_passages(folderpath, is_labeled):
-    allFiles = glob.glob(folderpath + "*.tsv")
-    str_seqs = []
-    str_seq = []
-    label_seqs = []
-    label_seq = []
-    for filename in allFiles:
-        df = pd.read_csv(filename, sep='\t', header=0, index_col=0,engine='python')
-        df = df[pd.notnull(df["Discourse Type"])]
-        num_rec = df.shape[0]
-        prev_paragraph = ""
-        for i in range(num_rec):
-            if df["Paragraph"][i][0]=="p": # e.g. "p1"
-                if df["Paragraph"][i]!=prev_paragraph:
-                    prev_paragraph = df["Paragraph"][i]
-                    if len(str_seq)>0:
-                        str_seqs.append(str_seq)
-                        label_seqs.append(label_seq)
-                    str_seq = []
-                    label_seq = []
-                str_seq.append(df["Clause Text"][i].lower()) # Lower case!
-                if is_labeled:
-                    label_seq.append(df["Discourse Type"][i].strip())
     return str_seqs, label_seqs
 
 def from_BIO_ind(BIO_pred, BIO_target, indices):
