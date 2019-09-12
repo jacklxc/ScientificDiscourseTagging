@@ -1,6 +1,5 @@
 import codecs
 import numpy
-import pandas as pd
 import glob
 import re
 from sklearn.metrics import f1_score
@@ -179,3 +178,24 @@ def make_folds(train_X, train_Y, num_folds):
         train_fold_Y = numpy.concatenate(train_folds_Y)
         cv_folds.append(((train_fold_X, train_fold_Y), (X_folds[i], Y_folds[i])))
     return cv_folds
+
+def arg2param(args):
+    params = vars(args)
+    params["lr"] = float(args.lr)
+    params["hard_k"] = int(args.hard_k)
+    params["embedding_dropout"] = float(args.embedding_dropout)
+    params["high_dense_dropout"] = float(args.high_dense_dropout)
+    params["attention_dropout"] = float(args.attention_dropout)
+    params["lstm_dropout"] = float(args.lstm_dropout)
+    params["word_proj_dim"] = int(args.word_proj_dim)
+    params["lstm_dim"] = int(args.lstm_dim)
+    params["att_proj_dim"] = int(args.att_proj_dim)
+    params["rec_hid_dim"] = int(args.rec_hid_dim)
+    params["epoch"] = int(args.epoch)
+    params["maxseqlen"] = int(args.maxseqlen)
+    params["maxclauselen"] = int(args.maxclauselen)
+    params["batch_size"]=int(args.batch_size)
+    params["validation_split"] = float(args.validation_split)
+    return params
+ 
+    

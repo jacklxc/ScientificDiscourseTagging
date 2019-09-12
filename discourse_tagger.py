@@ -7,8 +7,7 @@ import json
 import pickle
 
 from rep_reader import RepReader
-from util import read_passages 
-from util import evaluate, make_folds, clean_words, test_f1, to_BIO, from_BIO, from_BIO_ind
+from util import read_passages, evaluate, make_folds, clean_words, test_f1, to_BIO, from_BIO, from_BIO_ind, arg2param
 
 import tensorflow as tf
 sess = tf.Session()
@@ -29,7 +28,8 @@ def reset_random_seed(seed):
     np.random.seed(seed)
 
 class PassageTagger(object):
-    def __init__(self, word_rep_file=None, pickled_rep_reader=None):
+    def __init__(self, params, word_rep_file=None, pickled_rep_reader=None):
+        self.params = params
         if pickled_rep_reader:
             self.rep_reader = pickled_rep_reader
         elif word_rep_file:
@@ -37,7 +37,11 @@ class PassageTagger(object):
         self.input_size = self.rep_reader.rep_shape[0]
         self.tagger = None
     
-    def make_data(self, trainfilename, use_attention, maxseqlen=None, maxclauselen=None, label_ind=None, train=False):
+    def make_data(self, trainfilename, maxseqlen=None, maxclauselen=None, label_ind=None, train=False):
+        use_attention = self.params["use_attention"]
+        maxseqlen = self.params["maxseqlen"]
+        maxclauselen = self.params["maxclauselen"]
+
         str_seqs, label_seqs = read_passages(trainfilename, is_labeled=train)
         print("Filtering data")
         str_seqs = clean_words(str_seqs)
@@ -114,7 +118,8 @@ class PassageTagger(object):
         self.rev_label_ind = {i: l for (l, i) in self.label_ind.items()}
         return seq_lengths, np.asarray(X), np.asarray(Y) # One-hot representation of labels
 
-    def predict(self, X, test_seq_lengths=None, tagger=None, batch_size=None):
+    def predict(self, X, test_seq_lengths=None, tagger=None):
+        batch_size = self.params["batch_size"]
         if not tagger:
             tagger = self.tagger
         if test_seq_lengths is None:
@@ -144,7 +149,26 @@ class PassageTagger(object):
             pred_label_seqs.append(pred_label_seq)
         return pred_probs, pred_label_seqs, x_lens
 
-    def fit_model(self, X, Y, use_attention, att_context, lstm, bidirectional, crf, embedding_dropout=0, high_dense_dropout=0, attention_dropout=0, lstm_dropout = 0, word_proj_dim=50, lstm_dim=50, lr=1e-3,epoch=100, batch_size=10, hard_k=0, reg=0, validation_split = 0.1, att_proj_dim = None, rec_hid_dim = None):
+    def fit_model(self, X, Y, reg=0):
+        use_attention = self.params["use_attention"]
+        att_context = self.params["att_context"]
+        lstm = self.params["lstm"]
+        bidirectional = self.params["bidirectional"]
+        crf = self.params["crf"]
+        embedding_dropout = self.params["embedding_dropout"]
+        high_dense_dropout = self.params["high_dense_dropout"]
+        attention_dropout = self.params["attention_dropout"]
+        lstm_dropout = self.params["lstm_dropout"]
+        word_proj_dim = self.params["word_proj_dim"]
+        lr = self.params["lr"]
+        epoch = self.params["epoch"]
+        batch_size = self.params["batch_size"]
+        hard_k = self.params["hard_k"]
+        att_proj_dim = self.params["att_proj_dim"]
+        rec_hid_dim = self.params["rec_hid_dim"]
+        lstm_dim = self.params["lstm_dim"]
+        validation_split = self.params["validation_split"]
+        
         early_stopping = EarlyStopping(patience = 5)
         num_classes = len(self.label_ind)
         tagger = Sequential()
@@ -193,17 +217,17 @@ class PassageTagger(object):
         for lr_fraction in lr_fractions:
             adam = Adam(lr=lr*lr_fraction, decay = decay)
             if crf:
-                #rmsprop = RMSprop(lr=lr,decay = decay)
                 tagger.compile(optimizer=adam, loss=Crf.loss_function, metrics=[Crf.accuracy])
             else:
                 tagger.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accuracy'])
-
             tagger.fit(X, Y, validation_split=validation_split, epochs=epoch, callbacks=[early_stopping], batch_size=batch_size,verbose=2)
-
-        tagger.summary()
+            tagger.summary()
         return tagger
 
-    def train(self, X, Y, use_attention, att_context, lstm, bidirectional, cv=True, folds=5, crf=False,save=True,embedding_dropout=0, high_dense_dropout=0, attention_dropout=0, lstm_dropout = 0, word_proj_dim=50,lr=1e-3,epoch=100, batch_size=10, hard_k=0, att_proj_dim = None, rec_hid_dim = None, lstm_dim = 50, validation_split = 0.1):
+    def train(self, X, Y, folds=5):
+        cv = self.params["cv"]
+        save = self.params["save"]
+        
         f_mean, f_std, original_f_mean, original_f_std = 0,0,0,0
         if cv:
             cv_folds = make_folds(X, Y, folds)
@@ -216,7 +240,7 @@ class PassageTagger(object):
                 cv_preds = []
 
             for fold_num, ((train_fold_X, train_fold_Y), (test_fold_X, test_fold_Y)) in enumerate(cv_folds):
-                self.tagger = self.fit_model(train_fold_X, train_fold_Y, use_attention, att_context, lstm, bidirectional, crf,embedding_dropout=embedding_dropout, high_dense_dropout=high_dense_dropout, attention_dropout=attention_dropout, lstm_dropout = lstm_dropout, word_proj_dim=word_proj_dim,lr=lr,epoch=epoch, batch_size=batch_size, hard_k=hard_k, att_proj_dim = att_proj_dim, rec_hid_dim = rec_hid_dim, lstm_dim=lstm_dim, validation_split=validation_split)
+                self.tagger = self.fit_model(train_fold_X, train_fold_Y)
                 pred_probs, pred_label_seqs, x_lens = self.predict(test_fold_X, tagger=self.tagger, batch_size=batch_size)
                 # Free the tagger from memory.
                 del self.tagger
@@ -263,9 +287,9 @@ class PassageTagger(object):
             print("Original Fscores:", original_fscores)
             print("Average: %0.4f (+/- %0.4f)"%(original_f_mean, original_f_std * 2))
             
-        self.tagger = self.fit_model(X, Y, use_attention, att_context, lstm, bidirectional, crf,embedding_dropout=embedding_dropout, high_dense_dropout=high_dense_dropout, attention_dropout=attention_dropout, lstm_dropout = lstm_dropout, word_proj_dim=word_proj_dim, lr=lr,epoch=epoch, batch_size=batch_size, hard_k=hard_k,att_proj_dim = att_proj_dim, rec_hid_dim = rec_hid_dim, lstm_dim=lstm_dim, validation_split=validation_split)
+        self.tagger = self.fit_model(X, Y)
         if save:
-            model_ext = "att=%s_cont=%s_lstm=%s_bi=%s_crf=%s"%(str(use_attention), att_context, str(lstm), str(bid), str(crf))
+            model_ext = "att=%s_cont=%s_lstm=%s_bi=%s_crf=%s"%(str(self.params["use_attention"]),self.params["att_context"], str(self.params["lstm"]), str(self.params["bidirectional"]), str(self.params["crf"]))
             model_config_file = open("model_%s_config.json"%model_ext, "w")
             model_weights_file_name = "model_%s_weights"%model_ext
             model_label_ind = "model_%s_label_ind.json"%model_ext
@@ -287,7 +311,7 @@ if __name__ == "__main__":
     argparser.add_argument('--repfile', type=str, help="Word embedding file")
     argparser.add_argument('--train_file', type=str, help="Training file. One clause<tab>label per line and passages separated by blank lines.")
     argparser.add_argument('--cv', help="Do cross validation", action='store_true')
-    argparser.add_argument('--test_files', metavar="TESTFILE", type=str, nargs='+', help="Test file name(s), separated by space. One clause per line and passages separated by blank lines.")
+    argparser.add_argument('--test_file', type=str, help="Test file name, one clause per line and passages separated by blank lines.")
     argparser.add_argument('--use_attention', help="Use attention over words? Or else will average their representations", action='store_true')
     argparser.add_argument('--att_context', type=str, help="Context to look at for determining attention (word/clause)")
     argparser.set_defaults(att_context='word')
@@ -329,73 +353,51 @@ if __name__ == "__main__":
     argparser.set_defaults(batch_size=10)
     
     args = argparser.parse_args()
+    params = arg2param(args)
     reset_random_seed(12345) # Good for word attention
-    repfile = args.repfile
     if args.train_file:
-        trainfile = args.train_file
-        train = True
+        params["train"] = True
         #assert args.repfile is not None, "Word embedding file required for training."
     else:
-        train = False
-    if args.test_files:
-        testfiles = args.test_files
-        test = True
+        params["train"] = False
+    if args.test_file:
+        params["test"] = True
     else:
-        test = False
+        params["test"] = False
 
-    if not train and not test:
+    if not params["train"] and not params["test"]:
         raise(RuntimeError, "Please specify a train file or test files.")
-    use_attention = args.use_attention
-    att_context = args.att_context
-    lstm = args.lstm
-    bid = args.bidirectional
-    crf = args.crf
-    lr = float(args.lr)
-    hard_k = int(args.hard_k)
-    embedding_dropout = float(args.embedding_dropout)
-    high_dense_dropout = float(args.high_dense_dropout)
-    attention_dropout = float(args.attention_dropout)
-    lstm_dropout = float(args.lstm_dropout)
-    word_proj_dim = int(args.word_proj_dim)
-    lstm_dim = int(args.lstm_dim)
-    att_proj_dim = int(args.att_proj_dim)
-    rec_hid_dim = int(args.rec_hid_dim)
-    epoch = int(args.epoch)
-    maxseqlen = int(args.maxseqlen)
-    maxclauselen = int(args.maxclauselen)
-    batch_size=int(args.batch_size)
-    if maxseqlen <= 0:
-        maxseqlen = None
-    if maxclauselen <= 0:
-        maxclauselen = None
+
+    if params["maxseqlen"] <= 0:
+        params["maxseqlen"] = None
+    if params["maxclauselen"] <= 0:
+        params["maxclauselen"] = None
     
-    save = args.save
-    validation_split = float(args.validation_split)
-    model_name = "att=%s_cont=%s_lstm=%s_bi=%s_crf=%s"%(str(use_attention), att_context, str(lstm), str(bid),str(crf))
+    model_name = "att=%s_cont=%s_lstm=%s_bi=%s_crf=%s"%(str(params["use_attention"]), params["att_context"], str(params["lstm"]), str(params["bidirectional"]),str(params["crf"]))
     print(model_name)
     f_mean, f_std, original_f_mean, original_f_std = 0,0,0,0
-    if train:
+    if params["train"]:
         # First returned value is sequence lengths (without padding)
-        nnt = PassageTagger(word_rep_file=repfile)
-        if repfile:
+        nnt = PassageTagger(params, word_rep_file=params["repfile"])
+        if params["repfile"]:
             print("Using embedding weight to find embeddings.")
-            _, X, Y = nnt.make_data(trainfile, use_attention, maxseqlen=maxseqlen, maxclauselen=maxclauselen, train=True)
+            _, X, Y = nnt.make_data(params["train_file"], train=params["train"])
         else:
             assert(0)
-        f_mean, f_std, original_f_mean, original_f_std = nnt.train(X, Y, use_attention, att_context, lstm, bid, cv=args.cv,  crf=crf,save=save,embedding_dropout=embedding_dropout, high_dense_dropout=high_dense_dropout, attention_dropout=attention_dropout, lstm_dropout = lstm_dropout, word_proj_dim=word_proj_dim,lr=lr,epoch=epoch, hard_k=hard_k, lstm_dim = lstm_dim, rec_hid_dim=rec_hid_dim, att_proj_dim=att_proj_dim, validation_split=validation_split, batch_size=batch_size)
-    if test:
-        if train:
+        f_mean, f_std, original_f_mean, original_f_std = nnt.train(X, Y)
+    if params["test"]:
+        if params["train"]:
             label_ind = nnt.label_ind
         else:
             # Load the model from file
-            model_ext = "att=%s_cont=%s_lstm=%s_bi=%s_crf=%s"%(str(use_attention), att_context, str(lstm), str(bid), str(crf))
+            model_ext = "att=%s_cont=%s_lstm=%s_bi=%s_crf=%s"%(str(params["use_attention"]), params["att_context"], str(params["lstm"]), str(params["bidirectional"]), str(params["crf"]))
             model_config_file = open("model_%s_config.json"%model_ext, "r")
             model_weights_file_name = "model_%s_weights"%model_ext
             model_label_ind = "model_%s_label_ind.json"%model_ext
             model_rep_reader = "model_%s_rep_reader.pkl"%model_ext
             rep_reader = pickle.load(open(model_rep_reader, "rb"))
             print("Loaded pickled rep reader")
-            nnt = PassageTagger(pickled_rep_reader=rep_reader)
+            nnt = PassageTagger(params, pickled_rep_reader=rep_reader)
             nnt.tagger = model_from_json(model_config_file.read(), custom_objects={"TensorAttention":TensorAttention, "HigherOrderTimeDistributedDense":HigherOrderTimeDistributedDense,"CRF":CRF})
             print("Loaded model:")
             print(nnt.tagger.summary())
@@ -404,28 +406,25 @@ if __name__ == "__main__":
             label_ind_json = json.load(open(model_label_ind))
             label_ind = {k: int(label_ind_json[k]) for k in label_ind_json}
             print("Loaded label index:", label_ind)
-        if not use_attention:
-            maxseqlen = nnt.tagger.inputs[0].shape[1]
-            maxclauselen = None
+        if not params["use_attention"]:
+            params["maxseqlen"] = nnt.tagger.inputs[0].shape[1]
+            params["maxclauselen"] = None
         else:
             for l in nnt.tagger.layers:
                 if ("TensorAttention" in l.name) or ("tensor_attention" in l.name):
-                    maxseqlen, maxclauselen = l.td1, l.td2
+                    params["maxseqlen"], params["maxclauselen"] = l.td1, l.td2
                     break
 
-        for test_file in testfiles:
-            print("Predicting on file %s"%(test_file))
-            test_out_file_name = "predictions/"+test_file.split("/")[-1].replace(".txt", "")+model_name+".out"
-            #test_out_file_name = args.outpath+test_file.split("/")[-1].replace(".txt", "")+"_GloVe"+".out"
-            outfile = open(test_out_file_name, "w")
-            print("maxseqlen", maxseqlen)
-      
-            test_seq_lengths, X_test, Y_test = nnt.make_data(test_file, use_attention, maxseqlen=maxseqlen, maxclauselen=maxclauselen, label_ind=label_ind, train=False)
-            pred_probs, pred_label_seqs, _ = nnt.predict(X_test, test_seq_lengths, batch_size=batch_size)
-                
-            pred_label_seqs = from_BIO(pred_label_seqs)
-            for pred_label_seq in pred_label_seqs:
-                for pred_label in pred_label_seq:
-                    print(pred_label,file = outfile)
-                print("",file = outfile)
+        print("Predicting on file %s"%(params["test_file"]))
+        test_out_file_name = "predictions/"+params["test_file"].split("/")[-1].replace(".txt", "")+model_name+".out"
+        outfile = open(test_out_file_name, "w")
+        print("maxseqlen", params["maxseqlen"])
+        
+        test_seq_lengths, X_test, Y_test = nnt.make_data(params["test_file"], label_ind=label_ind, train=False)
+        pred_probs, pred_label_seqs, _ = nnt.predict(X_test, test_seq_lengths)
 
+        pred_label_seqs = from_BIO(pred_label_seqs)
+        for pred_label_seq in pred_label_seqs:
+            for pred_label in pred_label_seq:
+                print(pred_label,file = outfile)
+            print("",file = outfile)
