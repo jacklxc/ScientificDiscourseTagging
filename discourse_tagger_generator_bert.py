@@ -7,7 +7,6 @@ import argparse
 import json
 import pickle
 
-from rep_reader import RepReader
 from util import read_passages, evaluate, make_folds, clean_words, test_f1, to_BIO, from_BIO, from_BIO_ind, arg2param
 
 import tensorflow as tf
@@ -177,7 +176,7 @@ class PassageTagger(object):
                    np.floor((1+current_epoch)/epochs_drop))
             return lrate
         
-        lr_fractions = [1]
+        lr_fractions = [1, 0.1]
         decay = 0
         for lr_fraction in lr_fractions:
             adam = Adam(lr=lr*lr_fraction, decay = decay)
@@ -203,11 +202,9 @@ class PassageTagger(object):
             model_config_file = open("model_%s_config.json"%model_ext, "w")
             model_weights_file_name = "model_%s_weights"%model_ext
             model_label_ind = "model_%s_label_ind.json"%model_ext
-            model_rep_reader = "model_%s_rep_reader.pkl"%model_ext
             print(self.tagger.to_json(), file=model_config_file)
             self.tagger.save_weights(model_weights_file_name, overwrite=True)
             json.dump(self.label_ind, open(model_label_ind, "w"))
-            pickle.dump(self.rep_reader, open(model_rep_reader, "wb"))
         return f_mean, f_std, original_f_mean, original_f_std
 
 if __name__ == "__main__":
@@ -299,9 +296,6 @@ if __name__ == "__main__":
             model_config_file = open("model_%s_config.json"%model_ext, "r")
             model_weights_file_name = "model_%s_weights"%model_ext
             model_label_ind = "model_%s_label_ind.json"%model_ext
-            model_rep_reader = "model_%s_rep_reader.pkl"%model_ext
-            #rep_reader = pickle.load(open(model_rep_reader, "rb"))
-            #print("Loaded pickled rep reader")
             nnt = PassageTagger(params)
             nnt.tagger = model_from_json(model_config_file.read(), custom_objects={"TensorAttention":TensorAttention, "HigherOrderTimeDistributedDense":HigherOrderTimeDistributedDense,"CRF":CRF})
             print("Loaded model:")
@@ -333,3 +327,4 @@ if __name__ == "__main__":
             for pred_label in pred_label_seq:
                 print(pred_label,file = outfile)
             print("",file = outfile)
+        outfile.close()
