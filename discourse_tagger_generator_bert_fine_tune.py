@@ -60,6 +60,7 @@ class PassageTagger(object):
         str_seqs, label_seqs = read_passages(trainfilename, is_labeled=train)
         print("Filtering data")
         str_seqs = clean_words(str_seqs)
+        
         label_seqs = to_BIO(label_seqs)
         if not label_ind:
             self.label_ind = {"none": 0}
@@ -253,6 +254,7 @@ if __name__ == "__main__":
     argparser.set_defaults(outpath="./")
     argparser.add_argument('--batch_size', help="batch size")
     argparser.set_defaults(batch_size=10)
+    argparser.add_argument('--fine_tune', help="Start from pretrained model", action='store_true')
     
     args = argparser.parse_args()
     params = arg2param(args)
@@ -279,15 +281,47 @@ if __name__ == "__main__":
     print(model_name)
     f_mean, f_std, original_f_mean, original_f_std = 0,0,0,0
     if params["train"]:
-        # First returned value is sequence lengths (without padding)
-        nnt = PassageTagger(params)
-        if params["repfile"]:
-            print("Using BERT.")
-            _, train_generator = nnt.make_data(params["train_file"], train=True)
-            _, validation_generator = nnt.make_data(params["validation_file"], label_ind=nnt.label_ind, train=True)
+        if params["fine_tune"]:
+            print("Loading pre-trained weights...")
+            model_ext = "att=%s_cont=%s_lstm=%s_bi=%s_crf=%s"%(str(params["use_attention"]), params["att_context"], str(params["lstm"]), str(params["bidirectional"]), str(params["crf"]))
+            model_config_file = open("model_%s_config.json"%model_ext, "r")
+            model_weights_file_name = "model_%s_weights"%model_ext
+            model_label_ind = "model_%s_label_ind.json"%model_ext
+            nnt = PassageTagger(params)
+            nnt.tagger = model_from_json(model_config_file.read(), custom_objects={"TensorAttention":TensorAttention, "HigherOrderTimeDistributedDense":HigherOrderTimeDistributedDense,"CRF":CRF})
+            print("Loaded model:")
+            print(nnt.tagger.summary())
+            nnt.tagger.load_weights(model_weights_file_name)
+            print("Loaded weights")
+            label_ind_json = json.load(open(model_label_ind))
+            label_ind = {k: int(label_ind_json[k]) for k in label_ind_json}
+            print("Loaded label index:", label_ind)
+            if not params["use_attention"]:
+                params["maxseqlen"] = nnt.tagger.inputs[0].shape[1]
+                params["maxclauselen"] = None
+            else:
+                for l in nnt.tagger.layers:
+                    if ("TensorAttention" in l.name) or ("tensor_attention" in l.name):
+                        params["maxseqlen"], params["maxclauselen"] = l.td1, l.td2
+                        break
+            
+            for l in nnt.tagger.layers:
+                l.trainable = True
+                
+            _, train_generator = nnt.make_data(params["train_file"], label_ind=label_ind, train=True)
+            _, validation_generator = nnt.make_data(params["validation_file"], label_ind=label_ind, train=True)
+            f_mean, f_std, original_f_mean, original_f_std = nnt.train(train_generator, validation_generator)
+            
         else:
-            assert(0)
-        f_mean, f_std, original_f_mean, original_f_std = nnt.train(train_generator, validation_generator)
+            # First returned value is sequence lengths (without padding)
+            nnt = PassageTagger(params)
+            if params["repfile"]:
+                print("Using BERT.")
+                _, train_generator = nnt.make_data(params["train_file"], train=True)
+                _, validation_generator = nnt.make_data(params["validation_file"], label_ind=nnt.label_ind, train=True)
+            else:
+                assert(0)
+            f_mean, f_std, original_f_mean, original_f_std = nnt.train(train_generator, validation_generator)
     if params["test"]:
         if params["train"]:
             label_ind = nnt.label_ind

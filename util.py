@@ -94,10 +94,10 @@ def clean_num(word):
     if any(char.isdigit() for char in word):
         try:
             num = float(word.replace(',', ''))
-            return '<NUM>'
+            return '@'
         except:
             if not any(char.isalpha() for char in word):
-                return '<NUM>'
+                return '@'
     return word
 
 
@@ -197,5 +197,3 @@ def arg2param(args):
     params["batch_size"]=int(args.batch_size)
     params["validation_split"] = float(args.validation_split)
     return params
- 
-    
