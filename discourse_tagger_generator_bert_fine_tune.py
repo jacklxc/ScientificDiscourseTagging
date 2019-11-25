@@ -10,7 +10,10 @@ import pickle
 from util import read_passages, evaluate, make_folds, clean_words, test_f1, to_BIO, from_BIO, from_BIO_ind, arg2param
 
 import tensorflow as tf
-sess = tf.Session()
+config = tf.ConfigProto()
+config.gpu_options.per_process_gpu_memory_fraction = 0.3
+config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
+sess = tf.Session(config=config)
 import keras.backend as K
 K.set_session(sess)
 from keras.activations import softmax
@@ -74,7 +77,7 @@ class PassageTagger(object):
                 sentence_lens = []
                 for str_seq in str_seqs:
                     for seq in str_seq:
-                        tokens = tokenizer.tokenize(seq.lower())
+                        tokens = self.tokenizer.tokenize(seq.lower())
                         sentence_lens.append(len(tokens))
                 maxclauselen = np.round(np.mean(sentence_lens) + 3 * np.std(sentence_lens)).astype(int)
         X = []

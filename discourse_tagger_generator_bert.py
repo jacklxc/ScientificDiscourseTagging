@@ -10,7 +10,10 @@ import pickle
 from util import read_passages, evaluate, make_folds, clean_words, test_f1, to_BIO, from_BIO, from_BIO_ind, arg2param
 
 import tensorflow as tf
-sess = tf.Session()
+config = tf.ConfigProto()
+config.gpu_options.per_process_gpu_memory_fraction = 0.3
+config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
+sess = tf.Session(config=config)
 import keras.backend as K
 K.set_session(sess)
 from keras.activations import softmax
@@ -73,7 +76,7 @@ class PassageTagger(object):
                 sentence_lens = []
                 for str_seq in str_seqs:
                     for seq in str_seq:
-                        tokens = tokenizer.tokenize(seq.lower())
+                        tokens = self.tokenizer.tokenize(seq.lower())
                         sentence_lens.append(len(tokens))
                 maxclauselen = np.round(np.mean(sentence_lens) + 3 * np.std(sentence_lens)).astype(int)
         X = []
@@ -246,9 +249,9 @@ if __name__ == "__main__":
     argparser.set_defaults(validation_split=0.1)
     argparser.add_argument('--save', help="Whether save the model or not",action='store_true')
     argparser.add_argument('--maxseqlen', help="max number of clauses per paragraph")
-    argparser.set_defaults(maxseqlen=40)
+    argparser.set_defaults(maxseqlen=30) ######## 40
     argparser.add_argument('--maxclauselen', help="max number of words per clause")
-    argparser.set_defaults(maxclauselen=60)
+    argparser.set_defaults(maxclauselen=70) ########## 60
     argparser.add_argument('--outpath', help="path of output labels")
     argparser.set_defaults(outpath="./")
     argparser.add_argument('--batch_size', help="batch size")
