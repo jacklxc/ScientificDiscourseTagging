@@ -38,7 +38,8 @@ class PassageTagger(object):
         self.params = params
         self.input_size = 768
         self.tagger = None
-        
+        self.maxclauselen = None
+        self.maxseqlen = None
         pretrained_path = self.params["repfile"]
         config_path = os.path.join(pretrained_path, 'bert_config.json')
         checkpoint_path = os.path.join(pretrained_path, 'bert_model.ckpt')
@@ -56,8 +57,6 @@ class PassageTagger(object):
     
     def make_data(self, trainfilename, maxseqlen=None, maxclauselen=None, label_ind=None, train=False):
         use_attention = self.params["use_attention"]
-        maxseqlen = self.params["maxseqlen"]
-        maxclauselen = self.params["maxclauselen"]
         batch_size = self.params["batch_size"]
 
         str_seqs, label_seqs = read_passages(trainfilename, is_labeled=train)
@@ -69,16 +68,25 @@ class PassageTagger(object):
         else:
             self.label_ind = label_ind
         seq_lengths = [len(seq) for seq in str_seqs]
-        if not maxseqlen:
-            maxseqlen = max(seq_lengths)
-        if not maxclauselen:
-            if use_attention:
+        if self.maxseqlen is None:
+            if maxseqlen:
+                self.maxseqlen = maxseqlen
+            elif self.params["maxseqlen"] is not None:
+                self.maxseqlen = self.params["maxseqlen"]
+            else:
+                self.maxseqlen = max(seq_lengths)
+        if self.maxclauselen is None:
+            if maxclauselen:
+                self.maxclauselen = maxclauselen
+            elif self.params["maxclauselen"] is not None:
+                self.maxclauselen = self.params["maxclauselen"]
+            elif use_attention:
                 sentence_lens = []
                 for str_seq in str_seqs:
                     for seq in str_seq:
                         tokens = self.tokenizer.tokenize(seq.lower())
                         sentence_lens.append(len(tokens))
-                maxclauselen = np.round(np.mean(sentence_lens) + 3 * np.std(sentence_lens)).astype(int)
+                self.maxclauselen = np.round(np.mean(sentence_lens) + 3 * np.std(sentence_lens)).astype(int)
         X = []
         Y = []
         Y_inds = []
@@ -89,9 +97,7 @@ class PassageTagger(object):
                         # Add new labels with values 0,1,2,....
                         self.label_ind[label] = len(self.label_ind)
         self.rev_label_ind = {i: l for (l, i) in self.label_ind.items()}
-        discourse_generator = BertDiscourseGenerator(self.bert, self.tokenizer, str_seqs, label_seqs, self.label_ind, batch_size, use_attention, maxseqlen, maxclauselen, train)
-        self.maxseqlen = maxseqlen
-        self.maxclauselen = maxclauselen
+        discourse_generator = BertDiscourseGenerator(self.bert, self.tokenizer, str_seqs, label_seqs, self.label_ind, batch_size, use_attention, self.maxseqlen, self.maxclauselen, train)
         return seq_lengths, discourse_generator # One-hot representation of labels
 
     def predict(self, discourse_generator, test_seq_lengths=None, tagger=None):
@@ -135,7 +141,6 @@ class PassageTagger(object):
         rec_hid_dim = self.params["rec_hid_dim"]
         lstm_dim = self.params["lstm_dim"]
         validation_split = self.params["validation_split"]
-        
         early_stopping = EarlyStopping(patience = 2)
         num_classes = len(self.label_ind)
         if use_attention:
@@ -249,9 +254,9 @@ if __name__ == "__main__":
     argparser.set_defaults(validation_split=0.1)
     argparser.add_argument('--save', help="Whether save the model or not",action='store_true')
     argparser.add_argument('--maxseqlen', help="max number of clauses per paragraph")
-    argparser.set_defaults(maxseqlen=30) ######## 40
+    argparser.set_defaults(maxseqlen=0) ######## 40
     argparser.add_argument('--maxclauselen', help="max number of words per clause")
-    argparser.set_defaults(maxclauselen=70) ########## 60
+    argparser.set_defaults(maxclauselen=0) ########## 60
     argparser.add_argument('--outpath', help="path of output labels")
     argparser.set_defaults(outpath="./")
     argparser.add_argument('--batch_size', help="batch size")
@@ -287,7 +292,7 @@ if __name__ == "__main__":
         if params["repfile"]:
             print("Using BERT.")
             _, train_generator = nnt.make_data(params["train_file"], train=True)
-            _, validation_generator = nnt.make_data(params["validation_file"], label_ind=nnt.label_ind, train=True)
+            _, validation_generator = nnt.make_data(params["validation_file"], train=True)
         else:
             assert(0)
         f_mean, f_std, original_f_mean, original_f_std = nnt.train(train_generator, validation_generator)
