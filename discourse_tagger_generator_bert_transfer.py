@@ -141,31 +141,17 @@ class PassageTagger(object):
         validation_split = self.params["validation_split"]
         early_stopping = EarlyStopping(patience = 2)
         num_classes = len(self.label_ind)
-        if use_attention:
-            inputs = Input(shape=(self.maxseqlen, self.maxclauselen, self.input_size))
-            x = Dropout(embedding_dropout)(inputs)
-            x = HigherOrderTimeDistributedDense(input_dim=self.input_size, output_dim=word_proj_dim, reg=reg)(x)
-            att_input_shape = (self.maxseqlen, self.maxclauselen, word_proj_dim)
-            x = Dropout(high_dense_dropout)(x)
-            x = TensorAttention(att_input_shape, context=att_context, hard_k=hard_k, proj_dim = att_proj_dim, rec_hid_dim = rec_hid_dim)(x)
-            x = Dropout(attention_dropout)(x)
-        else:
-            inputs = Input(shape=(self.maxseqlen, self.input_size))
-            x = Dropout(embedding_dropout)(inputs)
-            x = TimeDistributed(Dense(input_dim=self.input_size, units=word_proj_dim))
         
-        if bidirectional:
-            x = Bidirectional(LSTM(input_shape=(self.maxseqlen,word_proj_dim), units=lstm_dim, 
-                                          return_sequences=True,kernel_regularizer=l2(reg),
-                                          recurrent_regularizer=l2(reg), 
-                                          bias_regularizer=l2(reg)))(x)
-            x = Dropout(lstm_dropout)(x) 
-        elif lstm:
-            x = LSTM(input_shape=(self.maxseqlen,word_proj_dim), units=lstm_dim, return_sequences=True,
-                            kernel_regularizer=l2(reg),
-                            recurrent_regularizer=l2(reg), 
-                            bias_regularizer=l2(reg))(x)
-            x = Dropout(lstm_dropout)(x) 
+        # Load discourse tagger
+        model_config_file = open("rct_bert/config.json", "r")
+        model_weights_file_name = "rct_bert/weights"
+        cached_tagger = model_from_json(model_config_file.read(), custom_objects={"TensorAttention":TensorAttention, "HigherOrderTimeDistributedDense":HigherOrderTimeDistributedDense,"CRF":CRF})
+        cached_tagger.load_weights(model_weights_file_name)
+
+        for l in cached_tagger.layers:
+            l.trainable = True
+        inputs = cached_tagger.input
+        x = cached_tagger.layers[-2].output
 
         if crf:
             Crf = CRF(num_classes,learn_mode="join")
@@ -185,17 +171,27 @@ class PassageTagger(object):
         
         lr_fractions = [1]
         decay = 0
-        for lr_fraction in lr_fractions:
-            adam = Adam(lr=lr*lr_fraction, decay = decay)
-            if crf:
-                #rmsprop = RMSprop(lr=lr,decay = decay)
-                tagger.compile(optimizer=adam, loss=Crf.loss_function, metrics=[Crf.accuracy])
-            else:
-                tagger.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accuracy'])
-
-            tagger.fit_generator(train_generator, validation_data=validation_generator, epochs=epoch, callbacks=[early_stopping], verbose=2)
-
+        
+        adam = Adam(lr=lr, decay = decay)
+        if crf:
+            #rmsprop = RMSprop(lr=lr,decay = decay)
+            tagger.compile(optimizer=adam, loss=Crf.loss_function, metrics=[Crf.accuracy])
+        else:
+            tagger.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accuracy'])
         tagger.summary()
+        tagger.fit_generator(train_generator, validation_data=validation_generator, epochs=epoch, callbacks=[early_stopping], verbose=2)
+        
+        
+        #for l in cached_tagger.layers:
+        #    l.trainable = True
+            
+        #if crf:
+        #    #rmsprop = RMSprop(lr=lr,decay = decay)
+        #    tagger.compile(optimizer=adam, loss=Crf.loss_function, metrics=[Crf.accuracy])
+        #else:
+        #    tagger.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accuracy'])
+        #tagger.summary()
+        #tagger.fit_generator(train_generator, validation_data=validation_generator, epochs=epoch, callbacks=[early_stopping], verbose=2)
         return tagger
 
     def train(self, train_generator, validation_generator):

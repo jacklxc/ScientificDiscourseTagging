@@ -56,33 +56,37 @@ class PassageTagger(object):
     
     def make_data(self, trainfilename, maxseqlen=None, maxclauselen=None, label_ind=None, train=False):
         use_attention = self.params["use_attention"]
-        maxseqlen = self.params["maxseqlen"]
-        maxclauselen = self.params["maxclauselen"]
         batch_size = self.params["batch_size"]
 
         str_seqs, label_seqs = read_passages(trainfilename, is_labeled=train)
         print("Filtering data")
         str_seqs = clean_words(str_seqs)
-        
         label_seqs = to_BIO(label_seqs)
         if not label_ind:
             self.label_ind = {"none": 0}
         else:
             self.label_ind = label_ind
         seq_lengths = [len(seq) for seq in str_seqs]
-        if not maxseqlen:
-            maxseqlen = max(seq_lengths)
-        if not maxclauselen:
-            if use_attention:
+        if self.maxseqlen is None:
+            if maxseqlen:
+                self.maxseqlen = maxseqlen
+            elif self.params["maxseqlen"] is not None:
+                self.maxseqlen = self.params["maxseqlen"]
+            else:
+                self.maxseqlen = max(seq_lengths)
+        if self.maxclauselen is None:
+            if maxclauselen:
+                self.maxclauselen = maxclauselen
+            elif self.params["maxclauselen"] is not None:
+                self.maxclauselen = self.params["maxclauselen"]
+            elif use_attention:
                 sentence_lens = []
                 for str_seq in str_seqs:
                     for seq in str_seq:
                         tokens = self.tokenizer.tokenize(seq.lower())
                         sentence_lens.append(len(tokens))
-                maxclauselen = np.round(np.mean(sentence_lens) + 3 * np.std(sentence_lens)).astype(int)
-        X = []
-        Y = []
-        Y_inds = []
+                self.maxclauselen = np.round(np.mean(sentence_lens) + 3 * np.std(sentence_lens)).astype(int)
+
         if len(self.label_ind)<=1:
             for str_seq, label_seq in zip(str_seqs, label_seqs):
                 for label in label_seq:
@@ -90,9 +94,7 @@ class PassageTagger(object):
                         # Add new labels with values 0,1,2,....
                         self.label_ind[label] = len(self.label_ind)
         self.rev_label_ind = {i: l for (l, i) in self.label_ind.items()}
-        discourse_generator = BertDiscourseGenerator(self.bert, self.tokenizer, str_seqs, label_seqs, self.label_ind, batch_size, use_attention, maxseqlen, maxclauselen, train)
-        self.maxseqlen = maxseqlen
-        self.maxclauselen = maxclauselen
+        discourse_generator = BertDiscourseGenerator(self.bert, self.tokenizer, str_seqs, label_seqs, self.label_ind, batch_size, use_attention, self.maxseqlen, self.maxclauselen, train)
         return seq_lengths, discourse_generator # One-hot representation of labels
 
     def predict(self, discourse_generator, test_seq_lengths=None, tagger=None):
