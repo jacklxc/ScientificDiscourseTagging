@@ -9,7 +9,7 @@ class TensorAttention(Layer):
     Attention layer that operates on tensors
     '''
     input_ndim = 4
-    def __init__(self, att_input_shape, context='word', init='glorot_uniform', activation='tanh', weights=None, hard_k=6, proj_dim = None, rec_hid_dim = None, return_attention=False, **kwargs):
+    def __init__(self, att_input_shape, context='word', init='glorot_uniform', activation='tanh', weights=None, hard_k=0, proj_dim = None, rec_hid_dim = None, return_attention=False, **kwargs):
         self.supports_masking = True 
         self.init = initializers.get(init)
         self.activation = activations.get(activation)

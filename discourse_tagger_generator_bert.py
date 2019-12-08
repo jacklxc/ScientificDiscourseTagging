@@ -20,7 +20,7 @@ from keras.activations import softmax
 from keras.regularizers import l2
 from keras.models import Model, model_from_json
 from keras.layers import Input, LSTM, Dense, Dropout, TimeDistributed, Bidirectional
-from keras.callbacks import EarlyStopping,LearningRateScheduler
+from keras.callbacks import EarlyStopping,LearningRateScheduler, ModelCheckpoint
 from keras.optimizers import Adam, RMSprop, SGD
 from crf import CRF
 from attention import TensorAttention
@@ -140,6 +140,8 @@ class PassageTagger(object):
         lstm_dim = self.params["lstm_dim"]
         validation_split = self.params["validation_split"]
         early_stopping = EarlyStopping(patience = 2)
+        filepath=att_context+"_weights.best.hdf5"
+        checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=2, save_best_only=True, mode='max')
         num_classes = len(self.label_ind)
         if use_attention:
             inputs = Input(shape=(self.maxseqlen, self.maxclauselen, self.input_size))
@@ -147,7 +149,7 @@ class PassageTagger(object):
             x = HigherOrderTimeDistributedDense(input_dim=self.input_size, output_dim=word_proj_dim, reg=reg)(x)
             att_input_shape = (self.maxseqlen, self.maxclauselen, word_proj_dim)
             x = Dropout(high_dense_dropout)(x)
-            x = TensorAttention(att_input_shape, context=att_context, hard_k=hard_k, proj_dim = att_proj_dim, rec_hid_dim = rec_hid_dim)(x)
+            x, raw_attention = TensorAttention(att_input_shape, context=att_context, hard_k=hard_k, proj_dim = att_proj_dim, rec_hid_dim = rec_hid_dim, return_attention=True)(x)
             x = Dropout(attention_dropout)(x)
         else:
             inputs = Input(shape=(self.maxseqlen, self.input_size))
@@ -192,8 +194,8 @@ class PassageTagger(object):
                 tagger.compile(optimizer=adam, loss=Crf.loss_function, metrics=[Crf.accuracy])
             else:
                 tagger.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accuracy'])
-
-            tagger.fit_generator(train_generator, validation_data=validation_generator, epochs=epoch, callbacks=[early_stopping], verbose=2)
+            print(tagger.to_json(), file=open(att_context+"_config.json", "w"))
+            tagger.fit_generator(train_generator, validation_data=validation_generator, epochs=epoch, callbacks=[early_stopping, checkpoint], verbose=2)
 
         tagger.summary()
         return tagger
@@ -290,7 +292,8 @@ if __name__ == "__main__":
         if params["repfile"]:
             print("Using BERT.")
             _, train_generator = nnt.make_data(params["train_file"], train=True)
-            _, validation_generator = nnt.make_data(params["validation_file"], train=True)
+            json.dump(nnt.label_ind, open(params["att_context"]+"_label_ind.json", "w"))
+            _, validation_generator = nnt.make_data(params["validation_file"], label_ind=nnt.label_ind, train=True)
         else:
             assert(0)
         f_mean, f_std, original_f_mean, original_f_std = nnt.train(train_generator, validation_generator)
