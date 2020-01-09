@@ -11,6 +11,7 @@ If you have any question, please contact xiangcil@usc.edu.
 * Tensorflow (tested with v1.12, either gpu or non-gpu version is fine)
 * Keras (tested with v2.2.4, either gpu or non-gpu version is fine)
 * Scikit-learn
+* Keras-bert
 * Pre-trained embedding
   * [BioBERT] (https://github.com/dmis-lab/biobert)
   * [SciBERT] (https://github.com/allenai/scibert)
