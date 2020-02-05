@@ -43,6 +43,6 @@ After you train successfully, three new files appear in the directory, with file
 ## Testing
 You can specify test files while training itself using `--test_files` arguments. Alternatively, you can do it after training is done. In the latter case, `discourse_tagger` assumes the trained model files described above are present in the directory.
 ```
-python -u discourse_tagger_generator_bert.py --repfile REPFILE --test_file TESTFILE1 [TESTFILE2 ..] --use_attention --att_context clause --bidirectional --crf --save --maxseqlen 40 --maxclauselen 60
+python -u discourse_tagger_generator_bert.py --repfile REPFILE --test_file TESTFILE1 [TESTFILE2 ..] --use_attention --att_context LSTM_clause --bidirectional --crf --maxseqlen 40 --maxclauselen 60
 ```
 Make sure you use the same options for attention, context and bidirectional as you used for training.
