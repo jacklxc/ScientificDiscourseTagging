@@ -7,7 +7,7 @@ import argparse
 import json
 import pickle
 
-from util import from_BIO, arg2param
+from util import from_BIO, arg2param, read_passages
 
 from crf import CRF
 from attention import TensorAttention
@@ -16,7 +16,7 @@ from discourse_tagger_generator_bert import PassageTagger, reset_random_seed
 from keras.models import model_from_json
 
 if __name__ == "__main__":
-    argparser = argparse.ArgumentParser(description="Train, cross-validate and run LSTM discourse tagger")
+    argparser = argparse.ArgumentParser(description="")
     argparser.add_argument('--repfile', type=str, help="Word embedding file")
     argparser.add_argument('--test_file', type=str, help="Test file name, one clause per line and passages separated by blank lines.")
     argparser.add_argument('--use_attention', help="Use attention over words? Or else will average their representations", action='store_true')
@@ -109,16 +109,17 @@ if __name__ == "__main__":
                     break
 
         print("Predicting on file %s"%(params["test_file"]))
-        test_out_file_name = "predictions/"+params["test_file"].split("/")[-1].replace(".txt", "")+model_name+".out"
+        test_out_file_name = "predictions/"+params["test_file"].split("/")[-1].replace(".txt", "")+".tsv"
         outfile = open(test_out_file_name, "w")
-        print("maxseqlen", params["maxseqlen"])
         
         test_seq_lengths, test_generator = nnt.make_data(params["test_file"], label_ind=label_ind, train=False)
         pred_probs, pred_label_seqs, _ = nnt.predict(test_generator, test_seq_lengths)
 
+        raw_seqs, _ = read_passages(params["test_file"], is_labeled=False)
+
         pred_label_seqs = from_BIO(pred_label_seqs)
-        for pred_label_seq in pred_label_seqs:
-            for pred_label in pred_label_seq:
-                print(pred_label,file = outfile)
+        for raw_seq, pred_label_seq in zip(raw_seqs, pred_label_seqs):
+            for clause, pred_label in zip(raw_seq, pred_label_seq):
+                print(clause + "\t" + pred_label,file = outfile)
             print("",file = outfile)
         outfile.close()
