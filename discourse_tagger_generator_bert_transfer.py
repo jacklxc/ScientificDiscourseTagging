@@ -1,3 +1,7 @@
+"""
+A simple variation to load pre-trained model on PubMed-RCT on claim extraction task.
+"""
+
 import os
 import warnings
 import sys
