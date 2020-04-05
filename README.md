@@ -27,7 +27,7 @@ As explained in the paper, the model is intended for tagging discourse elements 
 ## Steps to use
 ### Preparing word embeddings
 
-#### BioBERT embedding
+#### BERT embedding
 * Follow the instruction of [SciBERT] (https://github.com/allenai/scibert), download the pretrained weights. Remeber to correct the file names to match the hard-coded name in BERT code.
 
 ## Training
