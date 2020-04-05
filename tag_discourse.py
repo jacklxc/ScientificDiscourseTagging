@@ -13,6 +13,7 @@ from crf import CRF
 from attention import TensorAttention
 from custom_layers import HigherOrderTimeDistributedDense
 from discourse_tagger_generator_bert import PassageTagger, reset_random_seed
+from keras.models import model_from_json
 
 if __name__ == "__main__":
     argparser = argparse.ArgumentParser(description="Train, cross-validate and run LSTM discourse tagger")
