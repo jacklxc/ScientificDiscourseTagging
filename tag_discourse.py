@@ -6,6 +6,7 @@ import numpy as np
 import argparse
 import json
 import pickle
+from glob import glob
 
 from util import from_BIO, arg2param, read_passages
 
@@ -18,7 +19,9 @@ from keras.models import model_from_json
 if __name__ == "__main__":
     argparser = argparse.ArgumentParser(description="")
     argparser.add_argument('--repfile', type=str, help="Word embedding file")
-    argparser.add_argument('--test_file', type=str, help="Test file name, one clause per line and passages separated by blank lines.")
+    argparser.add_argument('--test_path', type=str, help="Test path name, one clause per line and passages separated by blank lines.")
+    argparser.add_argument('--out_path', type=str, help="Output path name, one clause per line and passages separated by blank lines.")
+    argparser.set_defaults(out_path="predictions/")
     argparser.add_argument('--use_attention', help="Use attention over words? Or else will average their representations", action='store_true')
     argparser.set_defaults(use_attention=True)
     argparser.add_argument('--att_context', type=str, help="Context to look at for determining attention (word/clause)")
@@ -67,7 +70,7 @@ if __name__ == "__main__":
     reset_random_seed(12345) # Good for word attention
 
     params["train"] = False
-    if args.test_file:
+    if args.test_path:
         params["test"] = True
     else:
         params["test"] = False
@@ -108,18 +111,28 @@ if __name__ == "__main__":
                     params["maxseqlen"], params["maxclauselen"] = l.td1, l.td2
                     break
 
-        print("Predicting on file %s"%(params["test_file"]))
-        test_out_file_name = "predictions/"+params["test_file"].split("/")[-1].replace(".txt", "")+".tsv"
-        outfile = open(test_out_file_name, "w")
-        
-        test_seq_lengths, test_generator = nnt.make_data(params["test_file"], label_ind=label_ind, train=False)
-        pred_probs, pred_label_seqs, _ = nnt.predict(test_generator, test_seq_lengths)
+        if not os.path.exists(args.out_path):
+            os.mkdir(args.out_path)
 
-        raw_seqs, _ = read_passages(params["test_file"], is_labeled=False)
+        paper_paths = glob(os.path.join(params["out_path"],"*"))
 
-        pred_label_seqs = from_BIO(pred_label_seqs)
-        for raw_seq, pred_label_seq in zip(raw_seqs, pred_label_seqs):
-            for clause, pred_label in zip(raw_seq, pred_label_seq):
-                print(clause + "\t" + pred_label,file = outfile)
-            print("",file = outfile)
-        outfile.close()
+        for test_file in paper_paths:
+            test_out_file_name = os.path.join(params["out_path"], test_file.split("/")[-1].replace(".txt", "")+".tsv")
+
+            if not os.path.exists(test_out_file_name):
+                print("Predicting on file %s"%(test_file))
+                outfile = open(test_out_file_name, "w")
+                
+                test_seq_lengths, test_generator = nnt.make_data(test_file, label_ind=label_ind, train=False)
+                pred_probs, pred_label_seqs, _ = nnt.predict(test_generator, test_seq_lengths)
+
+                raw_seqs, _ = read_passages(test_file, is_labeled=False)
+
+                pred_label_seqs = from_BIO(pred_label_seqs)
+                for raw_seq, pred_label_seq in zip(raw_seqs, pred_label_seqs):
+                    for clause, pred_label in zip(raw_seq, pred_label_seq):
+                        print(clause + "\t" + pred_label,file = outfile)
+                    print("",file = outfile)
+                outfile.close()
+            else:
+                print("%s already exists!"%(test_file))
