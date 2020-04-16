@@ -63,7 +63,7 @@ if __name__ == "__main__":
     argparser.add_argument('--outpath', help="path of output labels")
     argparser.set_defaults(outpath="./")
     argparser.add_argument('--batch_size', help="batch size")
-    argparser.set_defaults(batch_size=10)
+    argparser.set_defaults(batch_size=100)
     
     args = argparser.parse_args()
     params = arg2param(args)
@@ -114,19 +114,21 @@ if __name__ == "__main__":
         if not os.path.exists(args.out_path):
             os.mkdir(args.out_path)
 
-        paper_paths = glob(os.path.join(params["out_path"],"*"))
+        paper_paths = glob(os.path.join(params["test_path"],"*"))
 
         for test_file in paper_paths:
             test_out_file_name = os.path.join(params["out_path"], test_file.split("/")[-1].replace(".txt", "")+".tsv")
 
             if not os.path.exists(test_out_file_name):
                 print("Predicting on file %s"%(test_file))
+                raw_seqs, _ = read_passages(test_file, is_labeled=False)
+                if len(raw_seqs)==0:
+                    print("Empty file", test_file)
+                    continue
                 outfile = open(test_out_file_name, "w")
                 
                 test_seq_lengths, test_generator = nnt.make_data(test_file, label_ind=label_ind, train=False)
                 pred_probs, pred_label_seqs, _ = nnt.predict(test_generator, test_seq_lengths)
-
-                raw_seqs, _ = read_passages(test_file, is_labeled=False)
 
                 pred_label_seqs = from_BIO(pred_label_seqs)
                 for raw_seq, pred_label_seq in zip(raw_seqs, pred_label_seqs):

@@ -60,7 +60,7 @@ class PassageTagger(object):
         batch_size = self.params["batch_size"]
 
         str_seqs, label_seqs = read_passages(trainfilename, is_labeled=train)
-        print("Filtering data")
+        #print("Filtering data")
         str_seqs = clean_words(str_seqs)
         label_seqs = to_BIO(label_seqs)
         if not label_ind:
