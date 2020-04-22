@@ -6,6 +6,7 @@ import numpy as np
 import argparse
 import json
 import pickle
+import random
 from glob import glob
 
 from util import from_BIO, arg2param, read_passages
@@ -115,6 +116,7 @@ if __name__ == "__main__":
             os.mkdir(args.out_path)
 
         paper_paths = glob(os.path.join(params["test_path"],"*"))
+        random.shuffle(paper_paths)
 
         for test_file in paper_paths:
             test_out_file_name = os.path.join(params["out_path"], test_file.split("/")[-1].replace(".txt", "")+".tsv")
