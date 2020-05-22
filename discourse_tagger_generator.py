@@ -1,4 +1,3 @@
-import os
 import warnings
 import sys
 import codecs
@@ -7,6 +6,7 @@ import argparse
 import json
 import pickle
 
+from rep_reader import RepReader
 from util import read_passages, evaluate, make_folds, clean_words, test_f1, to_BIO, from_BIO, from_BIO_ind, arg2param
 
 import tensorflow as tf
@@ -20,47 +20,35 @@ from keras.activations import softmax
 from keras.regularizers import l2
 from keras.models import Model, model_from_json
 from keras.layers import Input, LSTM, Dense, Dropout, TimeDistributed, Bidirectional
-from keras.callbacks import EarlyStopping,LearningRateScheduler, ModelCheckpoint
+from keras.callbacks import EarlyStopping,LearningRateScheduler
 from keras.optimizers import Adam, RMSprop, SGD
 from crf import CRF
 from attention import TensorAttention
 from custom_layers import HigherOrderTimeDistributedDense
-from generator import BertDiscourseGenerator
-from keras_bert import load_trained_model_from_checkpoint, Tokenizer
-
+from generator import DiscourseGenerator
 
 def reset_random_seed(seed):
     tf.set_random_seed(seed)
     np.random.seed(seed)
 
 class PassageTagger(object):
-    def __init__(self, params):
+    def __init__(self, params, word_rep_file=None, pickled_rep_reader=None):
         self.params = params
-        self.input_size = 768
+        if pickled_rep_reader:
+            self.rep_reader = pickled_rep_reader
+        elif word_rep_file:
+            self.rep_reader = RepReader(word_rep_file)
+        self.input_size = self.rep_reader.rep_shape[0]
         self.tagger = None
-        self.maxclauselen = None
-        self.maxseqlen = None
-        pretrained_path = self.params["repfile"]
-        config_path = os.path.join(pretrained_path, 'bert_config.json')
-        checkpoint_path = os.path.join(pretrained_path, 'bert_model.ckpt')
-        vocab_path = os.path.join(pretrained_path, 'vocab.txt')
-        
-        self.bert = load_trained_model_from_checkpoint(config_path, checkpoint_path)
-        self.bert._make_predict_function() # Crucial step, otherwise TF will give error.
-        
-        token_dict = {}
-        with codecs.open(vocab_path, 'r', 'utf8') as reader:
-            for line in reader:
-                token = line.strip()
-                token_dict[token] = len(token_dict)
-        self.tokenizer = Tokenizer(token_dict)    
     
     def make_data(self, trainfilename, maxseqlen=None, maxclauselen=None, label_ind=None, train=False):
         use_attention = self.params["use_attention"]
+        maxseqlen = self.params["maxseqlen"]
+        maxclauselen = self.params["maxclauselen"]
         batch_size = self.params["batch_size"]
 
         str_seqs, label_seqs = read_passages(trainfilename, is_labeled=train)
-        #print("Filtering data")
+        print("Filtering data")
         str_seqs = clean_words(str_seqs)
         label_seqs = to_BIO(label_seqs)
         if not label_ind:
@@ -68,26 +56,19 @@ class PassageTagger(object):
         else:
             self.label_ind = label_ind
         seq_lengths = [len(seq) for seq in str_seqs]
-        if self.maxseqlen is None:
-            if maxseqlen:
-                self.maxseqlen = maxseqlen
-            elif self.params["maxseqlen"] is not None:
-                self.maxseqlen = self.params["maxseqlen"]
-            else:
-                self.maxseqlen = max(seq_lengths)
-        if self.maxclauselen is None:
-            if maxclauselen:
-                self.maxclauselen = maxclauselen
-            elif self.params["maxclauselen"] is not None:
-                self.maxclauselen = self.params["maxclauselen"]
-            elif use_attention:
-                sentence_lens = []
+        if not maxseqlen:
+            maxseqlen = max(seq_lengths)
+        if not maxclauselen:
+            if use_attention:
+                clauselens = []
                 for str_seq in str_seqs:
-                    for seq in str_seq:
-                        tokens = self.tokenizer.tokenize(seq.lower())
-                        sentence_lens.append(len(tokens))
-                self.maxclauselen = np.round(np.mean(sentence_lens) + 3 * np.std(sentence_lens)).astype(int)
-
+                    clauselens.extend([len(clause.split()) for clause in str_seq])
+                    
+                maxclauselen = np.round(np.mean(clauselens) + 3 * np.std(clauselens)).astype(int)
+        X = []
+        Y = []
+        Y_inds = []
+        init_word_rep_len = len(self.rep_reader.word_rep) # Vocab size
         if len(self.label_ind)<=1:
             for str_seq, label_seq in zip(str_seqs, label_seqs):
                 for label in label_seq:
@@ -95,7 +76,9 @@ class PassageTagger(object):
                         # Add new labels with values 0,1,2,....
                         self.label_ind[label] = len(self.label_ind)
         self.rev_label_ind = {i: l for (l, i) in self.label_ind.items()}
-        discourse_generator = BertDiscourseGenerator(self.bert, self.tokenizer, str_seqs, label_seqs, self.label_ind, batch_size, use_attention, self.maxseqlen, self.maxclauselen, train)
+        discourse_generator = DiscourseGenerator(self.rep_reader, str_seqs, label_seqs, self.label_ind, batch_size, use_attention, maxseqlen, maxclauselen, train, self.input_size)
+        self.maxseqlen = maxseqlen
+        self.maxclauselen = maxclauselen
         return seq_lengths, discourse_generator # One-hot representation of labels
 
     def predict(self, discourse_generator, test_seq_lengths=None, tagger=None):
@@ -139,9 +122,8 @@ class PassageTagger(object):
         rec_hid_dim = self.params["rec_hid_dim"]
         lstm_dim = self.params["lstm_dim"]
         validation_split = self.params["validation_split"]
+        
         early_stopping = EarlyStopping(patience = 2)
-        filepath=att_context+"_weights.best.hdf5"
-        checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=2, save_best_only=True, mode='max')
         num_classes = len(self.label_ind)
         if use_attention:
             inputs = Input(shape=(self.maxseqlen, self.maxclauselen, self.input_size))
@@ -149,7 +131,7 @@ class PassageTagger(object):
             x = HigherOrderTimeDistributedDense(input_dim=self.input_size, output_dim=word_proj_dim, reg=reg)(x)
             att_input_shape = (self.maxseqlen, self.maxclauselen, word_proj_dim)
             x = Dropout(high_dense_dropout)(x)
-            x, raw_attention = TensorAttention(att_input_shape, context=att_context, hard_k=hard_k, proj_dim = att_proj_dim, rec_hid_dim = rec_hid_dim, return_attention=True)(x)
+            x = TensorAttention(att_input_shape, context=att_context, hard_k=hard_k, proj_dim = att_proj_dim, rec_hid_dim = rec_hid_dim)(x)
             x = Dropout(attention_dropout)(x)
         else:
             inputs = Input(shape=(self.maxseqlen, self.input_size))
@@ -194,8 +176,8 @@ class PassageTagger(object):
                 tagger.compile(optimizer=adam, loss=Crf.loss_function, metrics=[Crf.accuracy])
             else:
                 tagger.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accuracy'])
-            print(tagger.to_json(), file=open(att_context+"_config.json", "w"))
-            tagger.fit_generator(train_generator, validation_data=validation_generator, epochs=epoch, callbacks=[early_stopping, checkpoint], verbose=2)
+
+            tagger.fit_generator(train_generator, validation_data=validation_generator, epochs=epoch, callbacks=[early_stopping], verbose=2)
 
         tagger.summary()
         return tagger
@@ -211,9 +193,11 @@ class PassageTagger(object):
             model_config_file = open("model_%s_config.json"%model_ext, "w")
             model_weights_file_name = "model_%s_weights"%model_ext
             model_label_ind = "model_%s_label_ind.json"%model_ext
+            model_rep_reader = "model_%s_rep_reader.pkl"%model_ext
             print(self.tagger.to_json(), file=model_config_file)
             self.tagger.save_weights(model_weights_file_name, overwrite=True)
             json.dump(self.label_ind, open(model_label_ind, "w"))
+            pickle.dump(self.rep_reader, open(model_rep_reader, "wb"))
         return f_mean, f_std, original_f_mean, original_f_std
 
 if __name__ == "__main__":
@@ -224,7 +208,7 @@ if __name__ == "__main__":
     argparser.add_argument('--test_file', type=str, help="Test file name, one clause per line and passages separated by blank lines.")
     argparser.add_argument('--use_attention', help="Use attention over words? Or else will average their representations", action='store_true')
     argparser.add_argument('--att_context', type=str, help="Context to look at for determining attention (word/clause)")
-    argparser.set_defaults(att_context='LSTM_clause')
+    argparser.set_defaults(att_context='word')
     argparser.add_argument('--lstm', help="Sentence level LSTM", action='store_true')
     argparser.add_argument('--bidirectional', help="Bidirectional LSTM", action='store_true')
     argparser.add_argument('--crf', help="Conditional Random Field", action='store_true')
@@ -241,22 +225,22 @@ if __name__ == "__main__":
     argparser.set_defaults(attention_dropout=0.6)
     argparser.set_defaults(lstm_dropout=0.5)
     argparser.add_argument('--word_proj_dim', help="word_projection_dimension")
-    argparser.set_defaults(word_proj_dim=300)
+    argparser.set_defaults(word_proj_dim=225)
     argparser.add_argument('--lstm_dim', help="Discourse level LSTM dimension")
-    argparser.set_defaults(lstm_dim=350)
+    argparser.set_defaults(lstm_dim=200)
     argparser.add_argument('--att_proj_dim', help="Attention projection dimension")
-    argparser.set_defaults(att_proj_dim=200)
+    argparser.set_defaults(att_proj_dim=110)
     argparser.add_argument('--rec_hid_dim', help="Attention RNN hidden dimension")
-    argparser.set_defaults(rec_hid_dim=75)
+    argparser.set_defaults(rec_hid_dim=60)
     argparser.add_argument('--epoch', help="Training epoch")
-    argparser.set_defaults(epoch=20)
+    argparser.set_defaults(epoch=100)
     argparser.add_argument('--validation_split', help="validation_split")
     argparser.set_defaults(validation_split=0.1)
     argparser.add_argument('--save', help="Whether save the model or not",action='store_true')
     argparser.add_argument('--maxseqlen', help="max number of clauses per paragraph")
-    argparser.set_defaults(maxseqlen=0) ######## 40
+    argparser.set_defaults(maxseqlen=40)
     argparser.add_argument('--maxclauselen', help="max number of words per clause")
-    argparser.set_defaults(maxclauselen=0) ########## 60
+    argparser.set_defaults(maxclauselen=60)
     argparser.add_argument('--outpath', help="path of output labels")
     argparser.set_defaults(outpath="./")
     argparser.add_argument('--batch_size', help="batch size")
@@ -288,11 +272,10 @@ if __name__ == "__main__":
     f_mean, f_std, original_f_mean, original_f_std = 0,0,0,0
     if params["train"]:
         # First returned value is sequence lengths (without padding)
-        nnt = PassageTagger(params)
+        nnt = PassageTagger(params, word_rep_file=params["repfile"])
         if params["repfile"]:
-            print("Using BERT.")
+            print("Using embedding weight to find embeddings.")
             _, train_generator = nnt.make_data(params["train_file"], train=True)
-            json.dump(nnt.label_ind, open(params["att_context"]+"_label_ind.json", "w"))
             _, validation_generator = nnt.make_data(params["validation_file"], label_ind=nnt.label_ind, train=True)
         else:
             assert(0)
@@ -306,7 +289,10 @@ if __name__ == "__main__":
             model_config_file = open("model_%s_config.json"%model_ext, "r")
             model_weights_file_name = "model_%s_weights"%model_ext
             model_label_ind = "model_%s_label_ind.json"%model_ext
-            nnt = PassageTagger(params)
+            model_rep_reader = "model_%s_rep_reader.pkl"%model_ext
+            rep_reader = pickle.load(open(model_rep_reader, "rb"))
+            print("Loaded pickled rep reader")
+            nnt = PassageTagger(params, pickled_rep_reader=rep_reader)
             nnt.tagger = model_from_json(model_config_file.read(), custom_objects={"TensorAttention":TensorAttention, "HigherOrderTimeDistributedDense":HigherOrderTimeDistributedDense,"CRF":CRF})
             print("Loaded model:")
             print(nnt.tagger.summary())
@@ -337,4 +323,3 @@ if __name__ == "__main__":
             for pred_label in pred_label_seq:
                 print(pred_label,file = outfile)
             print("",file = outfile)
-        outfile.close()

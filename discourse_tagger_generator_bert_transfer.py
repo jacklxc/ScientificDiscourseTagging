@@ -147,8 +147,8 @@ class PassageTagger(object):
         num_classes = len(self.label_ind)
         
         # Load discourse tagger
-        model_config_file = open("rct_bert/config.json", "r")
-        model_weights_file_name = "rct_bert/weights"
+        model_config_file = open("scidt_scibert/model_att=True_cont=LSTM_clause_lstm=False_bi=True_crf=True_config.json", "r")
+        model_weights_file_name = "scidt_scibert/model_att=True_cont=LSTM_clause_lstm=False_bi=True_crf=True_weights"
         cached_tagger = model_from_json(model_config_file.read(), custom_objects={"TensorAttention":TensorAttention, "HigherOrderTimeDistributedDense":HigherOrderTimeDistributedDense,"CRF":CRF})
         cached_tagger.load_weights(model_weights_file_name)
 
@@ -252,9 +252,9 @@ if __name__ == "__main__":
     argparser.set_defaults(validation_split=0.1)
     argparser.add_argument('--save', help="Whether save the model or not",action='store_true')
     argparser.add_argument('--maxseqlen', help="max number of clauses per paragraph")
-    argparser.set_defaults(maxseqlen=0) ######## 40
+    argparser.set_defaults(maxseqlen=40) 
     argparser.add_argument('--maxclauselen', help="max number of words per clause")
-    argparser.set_defaults(maxclauselen=0) ########## 60
+    argparser.set_defaults(maxclauselen=60) 
     argparser.add_argument('--outpath', help="path of output labels")
     argparser.set_defaults(outpath="./")
     argparser.add_argument('--batch_size', help="batch size")
@@ -281,7 +281,7 @@ if __name__ == "__main__":
     if params["maxclauselen"] <= 0:
         params["maxclauselen"] = None
     
-    model_name = "att=%s_cont=%s_lstm=%s_bi=%s_crf=%s"%(str(params["use_attention"]), params["att_context"], str(params["lstm"]), str(params["bidirectional"]),str(params["crf"]))
+    model_name = "scidt_att=%s_cont=%s_lstm=%s_bi=%s_crf=%s"%(str(params["use_attention"]), params["att_context"], str(params["lstm"]), str(params["bidirectional"]),str(params["crf"]))
     print(model_name)
     f_mean, f_std, original_f_mean, original_f_std = 0,0,0,0
     if params["train"]:
@@ -290,7 +290,7 @@ if __name__ == "__main__":
         if params["repfile"]:
             print("Using BERT.")
             _, train_generator = nnt.make_data(params["train_file"], train=True)
-            _, validation_generator = nnt.make_data(params["validation_file"], train=True)
+            _, validation_generator = nnt.make_data(params["validation_file"], train=True, label_ind=nnt.label_ind)
         else:
             assert(0)
         f_mean, f_std, original_f_mean, original_f_std = nnt.train(train_generator, validation_generator)

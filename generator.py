@@ -52,7 +52,8 @@ class DiscourseGenerator(Sequence):
                         clause_rep = clause_rep[:self.maxclauselen]
                     x[-seq_len+i][-len(clause_rep):] = clause_rep
                 else:
-                    x[-seq_len+i] = np.max(clause_rep, axis=0)
+                    #x[-seq_len+i] = np.max(clause_rep, axis=0)
+                    x[-seq_len+i] = clause_rep[0,:]
                 y_ind[-seq_len+i] = self.label_ind[label]
             X.append(x)
             Y_inds.append(y_ind)
@@ -84,7 +85,8 @@ class DiscourseGenerator(Sequence):
                         clause_rep = clause_rep[:self.maxclauselen]
                     x[-seq_len+i][-len(clause_rep):] = clause_rep
                 else:
-                    x[-seq_len+i] = np.mean(clause_rep, axis=0)
+                    #x[-seq_len+i] = np.mean(clause_rep, axis=0)
+                    x[-seq_len+i] = clause_rep[0,:]
             X.append(x)
         return np.asarray(X), np.asarray([]) # One-hot representation of labels
 
@@ -148,7 +150,8 @@ class BertDiscourseGenerator(Sequence):
             if self.use_attention:
                 x[-seq_len:,:,:] = bert_embedding
             else:
-                x[-seq_len,:] = np.max(bert_embedding,axis=1)
+                #x[-seq_len:,:] = np.max(bert_embedding,axis=1)
+                x[-seq_len:,:] = bert_embedding[:,0,:]
             X.append(x)
             Y_inds.append(y_ind)
 
@@ -183,6 +186,7 @@ class BertDiscourseGenerator(Sequence):
             if self.use_attention:
                 x[-seq_len:,:,:] = bert_embedding
             else:
-                x[-seq_len,:] = np.max(bert_embedding,axis=1)
+                #x[-seq_len:,:] = np.max(bert_embedding,axis=1)
+                x[-seq_len:,:] = bert_embedding[:,0,:]
             X.append(x)
         return np.asarray(X), np.asarray([]) # One-hot representation of labels
