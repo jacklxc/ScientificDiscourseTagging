@@ -120,11 +120,15 @@ class BertDiscourseGenerator(Sequence):
             return self.make_data_train(str_seqs, label_seqs)
         else:
             return self.make_data_test(str_seqs)
-
+    
     def make_data_train(self,str_seqs, label_seqs):
         X = []
         Y = []
         Y_inds = []
+        
+        all_indices = []
+        all_segments = []
+        para_lens = []
         for str_seq, label_seq in zip(str_seqs, label_seqs):
             if self.use_attention:
                 x = np.zeros((self.maxseqlen, self.maxclauselen, self.input_size))
@@ -146,14 +150,26 @@ class BertDiscourseGenerator(Sequence):
                 
                 y_ind[-seq_len+i] = self.label_ind[label]
             
-            bert_embedding = self.bert.predict([np.array(para_indices), np.array(para_segments)])[:,:self.maxclauselen,:]
-            if self.use_attention:
-                x[-seq_len:,:,:] = bert_embedding
-            else:
-                #x[-seq_len:,:] = np.max(bert_embedding,axis=1)
-                x[-seq_len:,:] = bert_embedding[:,0,:]
-            X.append(x)
+            para_lens.append(len(para_indices))
+            all_indices.extend(para_indices)
+            all_segments.extend(para_segments)
             Y_inds.append(y_ind)
+            
+        bert_embedding = self.bert.predict([np.array(all_indices), np.array(all_segments)], batch_size=len(all_indices))[:,:self.maxclauselen,:]
+        
+        if self.use_attention:
+            X = np.zeros((len(str_seqs), self.maxseqlen, self.maxclauselen, self.input_size))
+        else:
+            X = np.zeros((len(str_seqs), self.maxseqlen, self.input_size))
+        
+        cumulative_index = 0
+        for i, para_len in enumerate(para_lens):
+            if self.use_attention:
+                X[i,-para_len:,:,:] = bert_embedding[cumulative_index: cumulative_index+para_len,:,:]
+            else:
+                #x[-seq_len:,:] = np.max(bert_embedding[cumulative_index: cumulative_index+para_len,:,:],axis=1)
+                X[i,-para_len:,:] = bert_embedding[cumulative_index: cumulative_index+para_len,0,:]
+            cumulative_index += para_len
 
         for y_ind in Y_inds:
             y = np.zeros((self.maxseqlen, len(self.label_ind)))
@@ -161,32 +177,50 @@ class BertDiscourseGenerator(Sequence):
                 y[i][y_ind_i.astype(int)] = 1
             Y.append(y)
         
-        return np.asarray(X), np.asarray(Y) # One-hot representation of labels
+        return X, np.asarray(Y) # One-hot representation of labels
     
     def make_data_test(self,str_seqs):
         X = []
+        
+        all_indices = []
+        all_segments = []
+        para_lens = []
         for str_seq in str_seqs:
             if self.use_attention:
                 x = np.zeros((self.maxseqlen, self.maxclauselen, self.input_size))
             else:
                 x = np.zeros((self.maxseqlen, self.input_size))
+            
             seq_len = len(str_seq)
             if seq_len > self.maxseqlen:
                 str_seq = str_seq[:self.maxseqlen]
                 seq_len = self.maxseqlen
-                
+            
             para_indices = []
             para_segments = []
             for i, clause in enumerate(str_seq):
                 indices, segments = self.tokenizer.encode(clause.lower(), max_len=512)
                 para_indices.append(indices)
                 para_segments.append(segments)
+                            
+            para_lens.append(len(para_indices))
+            all_indices.extend(para_indices)
+            all_segments.extend(para_segments)
             
-            bert_embedding = self.bert.predict([np.array(para_indices), np.array(para_segments)])[:,:self.maxclauselen,:]
+        bert_embedding = self.bert.predict([np.array(all_indices), np.array(all_segments)], batch_size=len(all_indices))[:,:self.maxclauselen,:]
+        
+        if self.use_attention:
+            X = np.zeros((len(str_seqs), self.maxseqlen, self.maxclauselen, self.input_size))
+        else:
+            X = np.zeros((len(str_seqs), self.maxseqlen, self.input_size))
+        
+        cumulative_index = 0
+        for i, para_len in enumerate(para_lens):
             if self.use_attention:
-                x[-seq_len:,:,:] = bert_embedding
+                X[i,-para_len:,:,:] = bert_embedding[cumulative_index: cumulative_index+para_len,:,:]
             else:
-                #x[-seq_len:,:] = np.max(bert_embedding,axis=1)
-                x[-seq_len:,:] = bert_embedding[:,0,:]
-            X.append(x)
-        return np.asarray(X), np.asarray([]) # One-hot representation of labels
+                #x[-para_len:,:] = np.max(bert_embedding[cumulative_index: cumulative_index+para_len,:,:],axis=1)
+                X[i,-para_len:,:] = bert_embedding[cumulative_index: cumulative_index+para_len,0,:]
+            cumulative_index += para_len
+        
+        return X, np.asarray([])
