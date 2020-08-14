@@ -1,6 +1,6 @@
 # Scientific Discourse Tagging
 
-Scientific discourse tagger implementation for paper "Scientific Discourse Tagging and Applications".
+Scientific discourse tagger implementation for paper [Scientific Discourse Tagging for Evidence Extraction] (https://arxiv.org/abs/1909.04758).
 
 This is a discourse tagger that tags each clause in a given paragraph from a biomedical paper with 8 types of discourse types, such as "fact", "method", "result", "implication" etc. The paper will be available as soon as it's published.
 
