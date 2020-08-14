@@ -1,6 +1,6 @@
 # Scientific Discourse Tagging
 
-Scientific discourse tagger implementation for paper [Scientific Discourse Tagging for Evidence Extraction] (https://arxiv.org/abs/1909.04758).
+Scientific discourse tagger implementation for paper [Scientific Discourse Tagging for Evidence Extraction](https://arxiv.org/abs/1909.04758).
 
 This is a discourse tagger that tags each clause in a given paragraph from a biomedical paper with 8 types of discourse types, such as "fact", "method", "result", "implication" etc. The paper will be available as soon as it's published.
 
@@ -13,8 +13,8 @@ If you have any question, please contact xiangcil@usc.edu.
 * Scikit-learn
 * Keras-bert
 * Pre-trained embedding
-  * [BioBERT] (https://github.com/dmis-lab/biobert)
-  * [SciBERT] (https://github.com/allenai/scibert)
+  * [BioBERT](https://github.com/dmis-lab/biobert)
+  * [SciBERT](https://github.com/allenai/scibert)
 
 ## Input Format
 Our discourse tagger expects inputs to lists of clauses or sentences, with paragraph boundaries identified, i.e., each line in the input file needs to be a clause or sentence and paragraphs should be separated by blank lines.
