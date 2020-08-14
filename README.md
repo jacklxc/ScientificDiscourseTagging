@@ -24,13 +24,13 @@ If you are training, the file additionally needs labels at the clause level, whi
 ## Intended Usage
 As explained in the paper, the model is intended for tagging discourse elements in biomedical research papers, and we use the seven label taxonomy described in [De Waard and Pander Maat (2012)](http://www.sciencedirect.com/science/article/pii/S1475158512000471) and additional "none" label for SciDT dataset and [PubMed-RCT](https://github.com/Franck-Dernoncourt/pubmed-rct). For the detailed usage, check our paper.
 
-If you want to tag your own data, you can parse your sentences into clauses following https://github.com/nltk/nltk/wiki/Stanford-CoreNLP-API-in-NLTK.
+If you want to tag your own data, you can parse your sentences into clauses following [this instruction](https://github.com/nltk/nltk/wiki/Stanford-CoreNLP-API-in-NLTK).
 
 ## Steps to use
 ### Preparing word embeddings
 
 #### BERT embedding
-* Follow the instruction of [SciBERT] (https://github.com/allenai/scibert), download the pretrained weights. Remeber to correct the file names to match the hard-coded name in BERT code.
+* Follow the instruction of [SciBERT](https://github.com/allenai/scibert), download the pretrained weights. Remeber to correct the file names to match the hard-coded name in BERT code.
 
 ## Training
 ### SciBERT embedding
