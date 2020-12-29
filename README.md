@@ -4,7 +4,9 @@ Scientific discourse tagger implementation for paper [Scientific Discourse Taggi
 
 This is a discourse tagger that tags each clause in a given paragraph from a biomedical paper with 8 types of discourse types, such as "fact", "method", "result", "implication" etc. The paper will be available as soon as it's published.
 
-If you have any question, please contact xiangcil@usc.edu.
+For the implementation of feature-based CRF for evidence fragment detection, please refer to [FigureSpanDetection](https://github.com/jacklxc/FigureSpanDetection).
+
+If you have any question, please contact lixiangci8@gmail.com.
 
 ## Requirements
 * Python 3
