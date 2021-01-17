@@ -8,7 +8,12 @@ For the implementation of feature-based CRF for evidence fragment detection, ple
 
 If you have any question, please contact lixiangci8@gmail.com.
 
-## Additional Requirements
+## Requirements
+* Python 3
+* Tensorflow (tested with v1.12, either gpu or non-gpu version is fine)
+* Keras (tested with v2.2.4, either gpu or non-gpu version is fine)
+* Scikit-learn
+* Keras-bert
 * Pre-trained embedding
   * [BioBERT](https://github.com/dmis-lab/biobert)
   * [SciBERT](https://github.com/allenai/scibert)
