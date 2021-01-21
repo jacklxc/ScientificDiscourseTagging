@@ -1,0 +1,730 @@
+the stimulatory effect of constitutively active raga on s6k phosphorylation was not dramatic in normal culture medium ( fig. 2 ) .	result
+previously , we had also observed	result
+that stimulation of s6k phosphorylation by rheb was not dramatic in rich medium but was greatly enhanced under nutrient poor conditions34 .	result
+therefore , we tested s6k phosphorylation under amino acid deprivation .	method
+co-expression of constitutively active raga q66l increased s6k phosphorylation	result
+while wild type raga or dominant negative raga t21n did not ( fig. 3a ) .	result
+moreover , expression of raga t21n and ragc q120l completely blocked s6k phosphorylation in response to amino acid stimulation ( fig. 3b ) .	result
+surprisingly , expression of dominant negative ragc s75n but not constitutively active ragc q120l reproducibly increased s6k phosphorylation ( fig. 3a ) .	result
+although the effect was less dramatic , given the low expression of ragc s75n	result
+the s6k activation caused by ragc s75n was in fact rather significant .	result
+transfection with as little as 20ng of raga q66l dna strongly increased s6k phosphorylation in the absence of amino acids and this effect lasted over 12hrs ( fig. s2a , data not shown ) .	result
+expression of raga t21n strongly blocked amino acid stimulation	result
+even though the expression level was low ( fig. s2a ) .	result
+
+rho-like gtpases , including cdc42 , rac , and rho , regulate	fact
+signaling pathways that control actin cytoskeletal structures and transcriptional activation .	fact
+the tiam1 gene encodes an activator of rac1 , and similarly to constitutively activated ( v12 ) rac1	fact
+overexpression of tiam1 in fibroblasts induces the formation of membrane ruffles .	fact
+tiam1 contains a dbl homology ( dh ) domain and adjacent pleckstrin homology ( ph ) domain , hallmarks for activators of rho-like gtpases .	fact
+unique for tiam1 are an additional ph domain and a discs-large homology region in the nh2-terminal part of the protein .	fact
+here we show	result
+that both in fibroblasts and cos cells , membrane localization of tiam1 is required for the induction of membrane ruffling .	result
+a detailed mutational analysis , in combination with confocal laser scanning microscopy and immunoelectron microscopy , demonstrates	method
+that the nh2-terminal ph domain of tiam1 , but not the dh-adjacent ph domain , is essential for membrane association .	result
+this nh2-terminal ph domain of tiam1 can be functionally replaced by the myristoylated membrane localization domain of c-src ,	result
+indicating that the primary function of this ph domain is to localize the protein at the membrane .	implication
+after serum starvation , both membrane association of tiam1 and ruffling can be induced by serum ,	result
+suggesting that receptor stimulation induces membrane translocation of tiam1 .	implication
+similar to v12rac1	result
+tiam1 stimulates the activity of the c-jun nh2-terminal kinase ( jnk ) .	result
+this rac-dependent stimulation of jnk also requires membrane association of tiam1 .	result
+we conclude	implication
+that the regulated membrane localization of tiam1 through its nh2-terminal ph domain determines the activation of distinct rac-mediated signaling pathways .	implication
+
+while most wnt signaling has been attributed to the activation of fz receptors	fact
+an alternative possibility is that wnts carry out their diverse roles by signaling via different receptors .	hypothesis
+one such receptor is ror2 , an orphan tyrosine kinase possessing an extracellular cysteine-rich wnt binding domain ( crd ) [ 20 - 23 ] .	fact
+wnt5a and mror2 have overlapping expression patterns , their knockout phenotypes are similar , and recently	result
+mror2 has been shown to act synergistically with wnt5a to activate jun kinase [ 23 - 26 ] .	result
+thus , wnt5a may be mediating its inhibitory role through the activation of this novel receptor .	hypothesis
+
+first , in pex14delta and pex5delta/pex14delta strains , pex13p still coimmunoprecipitated with mycpex7p ( fig. 3 ) ,	result
+suggesting that pex13p associates directly or indirectly with pex7p .	implication
+moreover , this result indicated	result
+that neither pex14p nor pex5p is required for the formation of this subcomplex of pex13p and pex7p .	implication
+second , the amount of pex5p in the precipitate from pex14delta cells was drastically reduced ,	result
+while the amount in pex13p remained essentially unchanged ( fig. 3 , lane pex14delta ) .	result
+this result supports the notion	implication
+that the amount of pex5p bound to pex13p does not determine the stoichiometry of the pex13p-pex7p subcomplex .	implication
+however , it also suggests	implication
+that pex13p may not bind both import receptors equally at the same time .	implication
+third , pex13p , pex14p , and pex5p still coimmunoprecipitated with pex7p in pex17delta cells ( fig. 3 , lane pex17delta ) .	result
+obviously , pex7p is associated with components of the peroxisomal translocation machinery in the absence of pex17p ,	result
+suggesting that the presence of pex17p is not a prerequisite for docking of pex7p to the peroxisomal membrane .	implication
+fourth , the lack of pex17p in the coimmunoprecipitate from pex14delta cells ( fig. 3 , lane pex14delta ) , suggests	result
+that pex14p is required for the association of pex17p with the complex , and is consistent with the assumption that pex17p binding to the complex may be via pex14p .	implication
+however , this observation must be interpreted with care	problem
+since the pex14delta cells contain much less immunologically detectable pex17p ( huhse et al. , 1998 ) .	problem
+finally , the amount of fox3p	result
+that coimmunoprecipitates with pex7p drastically increases in mutants with an import defect for pts2 proteins ( pex17delta , pex13delta , pex14delta , and pex5delta/pex14delta ) relative to the strains unaffected in this pathway ( wild-type and pex5delta ) .	result
+since the total amount of both proteins is similar in all strains ( fig. 3 b ) , it seems unlikely	result
+that the observed pex7p/fox3p complex has formed in vitro after cell disruption .	hypothesis
+a simple explanation for this may be	implication
+that the high cytosolic concentration of thiolase in the import mutants results in greater occupation of the pts2 receptor .	implication
+
+in the later part of the study , we employed	method
+a linear ion trap fourier transform mass spectrometer ( ltq-ft , thermofinnigan ) .	method
+this instrument has significantly higher	fact
+sequencing speed and peptide mass accuracy , which resulted in significantly higher quality data .	fact
+
+lc3 , the mammalian atg8 homolog , undergoes a set of modifications resulting in conversion from lc3i to lc3ii during autophagy 42 .	fact
+to further test the function of rag in autophagy	goal
+we examined the lc3 modification in hek293 cells .	method
+expression of raga ql and ragc sn inhibited lc3 conversion in response to amino acid starvation ( fig. 7e ) .	result
+furthermore , expression of raga tn and ragc ql enhanced lc3 conversion even in the presence of amino acids .	result
+these results are consistent with the data observed in drosophila and further demonstrate a role of the rag gtpases in autophagy regulation in response to nutrient signals .	implication
+
+after stimulation , cells were lysed in np-40 lysis buffer ( 20 mm hepes , ph 7.5 , 150 mm nacl , 1 % np-40 , and 1 mm na3vo4 )	method
+containing edta-free complete protease inhibitor cocktail ( boehringer mannheim corp. , indianapolis , in ) , centrifuged at 16,000 g for 10 min , and precleared twice with 50 mul of gammabind g-sepharose slurry ( pharmacia biotech , piscataway , nj ) .	method
+map kinases were immunoprecipitated with 50 mul gammabind g-sepharose slurry and 2 mug polyclonal rabbit antibody , specific for the 20 cooh-terminal residues of p38alpha or the 17 cooh-terminal residues of jnk1 ( santa cruz biotechnology , santa cruz , ca ) .	method
+immunoprecipitates were washed twice with np-40 lysis buffer and twice with kinase reaction buffer ( 25 mm hepes , ph 7.5 , 10 mm mgcl2 , 10 mm mncl2 , 20 mm beta-glycerophosphate , and 1x edta-free complete protease inhibitor cocktail ) .	method
+kinase reactions were performed for 20 min at 30degreesc in kinase reaction buffer	method
+containing 50 mum atp and 5 muci gamma- [ 32p ] atp ( 3,000 ci/mmol ; amersham corp. , arlington heights , il ) with 0.5 mug gst-map kinase - activated protein kinase 2 ( mapkapk2 ; upstate biotechnology , lake placid , ny ) as p38 substrate or 2 mug gst-c-jun ( biomol , king of prussia , pa ) as jnk1 substrate .	method
+samples were boiled in sds sample buffer , electrophoresed in 10 % tris-glycine polyacrylamide gels , and transferred to pvdf membranes ( novex , san diego , ca ) .	method
+bands were quantified on a phosphorimager system ( storm 840 ; molecular dynamics inc. , sunnyvale , ca ) .	method
+membranes were stained for p38 and jnk1 protein	method
+using the p38 and jnk1 antibodies described above and the vistra ecf western blotting system ( amersham corp. ) .	method
+
+to investigate whether ampk mediates vegf-stimulated no synthesis	goal
+we first determined the effects of physiological concentrations of vegf on ampk activity and enos ser1177 phosphorylation in haecs .	method
+vegf ( 10 ng/ml ) elicited a transient , concomitant activation of ampk and enos phosphorylation at ser1177 ,	result
+which reached a maximum 2.8 - and 3.6-fold stimulation , respectively , after 5 min .	result
+both ampk activity and enos phosphorylation rapidly returned to basal levels ( fig. 1a ) .	result
+in addition , activation of ampk and phosphorylation of enos at ser1177 by vegf shared	result
+a similar dose-dependence , such that ampk activity and enos ser1177 phosphorylation were stimulated maximally ( 2.5 - and 3.6-fold , respectively ) by 10 ng/ml vegf , a concentration at which all further experiments were performed ( fig. 1b ) .	result
+previous studies have reported	result
+that stimulation of human umbilical vein endothelial cells ( huvecs ) with vegf for 6 h or bovine aortic endothelial cells ( baecs ) with vegf for 10 min was without effect on phosphorylation of ampk at thr172 [ 15,19 ] .	result
+these studies are in agreement with the present study	result
+in which vegf-stimulated ampk activity peaked after 5 min incubation and returned to basal values within 15 min .	result
+
+immunoprecipitations were performed	method
+as described previously 38 using postnuclear supernatants of 1 % detergent ( triton x-100 , np-40 , or laurylmaltoside [ n-dodecyl beta-d-maltoside ; sigma-aldrich ] ) cell lysates ( lysis buffer : tris-buffered saline , ph 7.5 , containing 1 mm pefabloc , 10 mm edta , 10 mm naf , 1 mm navo3 ) and cnbr sepharose beads ( amersham pharmacia biotech ) coupled with protein a-purified mabs .	method
+precipitations using recombinant glutathione s-transferase ( gst ) -coupled src homology ( sh ) 2 domains	method
+were performed as described elsewhere 3238 .	method
+the sh2 domains of csk , vav , and ras-gap were provided by dr. a. beyers ( university of stellenbosch medical school , tygerberg , south africa ) .	method
+all other sh2 domains have been described elsewhere 3238 .	result
+precipitates were washed and then either subjected to sds-page or further processed for two-dimensional gel electrophoresis , in vitro kinase assay , or reprecipitation experiments .	method
+gems were immunoprecipitated from raji and jurkat cells by the " solid phase immunoisolation technique " followed by in vitro kinase assays ,	method
+as described previously 9 . reprecipitation experiments were conducted as described elsewhere 3738 .	method
+in some experiments , immunoisolation was performed	method
+using minicolumns ( 25-200-mul packed volume ) of cnbr sepharose beads coupled with protein a-purified mabs .	method
+postnuclear lysates were passed through the columns .	method
+after washing with 10-column volumes of lysis buffer ,	method
+bound proteins were eluted with 2-column volumes of 2 % sds and the flow-through , and eluted fractions were analyzed by sds-page followed by western blotting .	method
+
+grb2 was also found to bind sequences	result
+that deviate from the strict target sequence py-x-n .	result
+our experiments suggest the more generalized consensus motif py- [ phiq ] - [ nqfdk ] ,	implication
+where phi is a hydrophobic residue .	implication
+binding of grb2 to motifs deviating from the py-x-n sequence has previously been noted ( songyang et al , 1994 ; ward et al , 1996 ) .	result
+to describe grb2 binding preferences	goal
+we compared ion intensities in extracted ion chromatograms of identical tryptic peptides of grb2 from pull-down experiments with different phosphotyrosine residues ( figure 3 ) .	method
+for the same mass spectrometric conditions , peptide ion signals from the same tryptic peptide in different experiments are indicative of the abundance of these peptides in different samples , a fact	method
+that is , for example , used in protein correlation profiling ( andersen et al , 2003 ) .	method
+those bait peptides	method
+containing an asparagine residue at position +2 led to identification of grb2 peptides with high ion intensities .	method
+this correlates with the strong binding of grb2 to the py-x-n motif .	method
+in contrast , bait peptides without asparagine at position +2 resulted in the identification of tryptic peptides with significantly lower ion intensities ( figure 3 ) .	result
+nevertheless ,	result
+in all cases , grb2 was identified as a specific binding partner to the bait peptide , and these results were confirmed by western blots ( insets in figure 3 ) .	result
+furthermore , our findings are in agreement with in vitro studies of binding affinities of synthetic peptides to the recombinant sh2 domain of grb2 ( ward et al , 1996 ) .	implication
+
+to investigate whether ck2 phosphorylation of the mdc1 sdtd region promotes mrn binding in vivo , we transiently expressed	goal
+a haemagglutinin ( ha ) -tagged mdc1 sdtd fragment coupled to a nuclear localization sequence in u20s cells ( ha-sdtd6 ; supplementary fig s1c online ) .	method
+immunoblotting showed	result
+that treating these cells with the ck2 inhibitor 4,5,6,7-tetrabromo-benzimidazole increased the electrophoretic mobility of the mdc1 sdtd fragment and reduced the ability of the fragment to co-immunoprecipitate mrn ( fig 2e ) .	result
+
+acc is phosphorylated by ampk at ser80 in acc1 and ser220 in acc2 ( human sequence ) .	fact
+using an antibody that recognises both phosphorylated species , we demonstrated that vegf stimulates phosphorylation of acc	result
+an effect completely inhibited in haecs infected with ad.alpha1dn ( fig. 4 ) .	result
+these data indicate	result
+that infection with ad.alpha1dn completely inhibits vegf-stimulated ampk activity .	result
+we were unable	result
+to distinguish whether the band represented acc1 , acc2 or both .	result
+inhibition of acc1/acc2 by phosphorylation at ser80/ser221 has been demonstrated	result
+to inhibit fatty acid synthesis in adipose tissue and liver whilst stimulating fatty acid oxidation in heart and skeletal muscle [ 11 ] .	result
+activation of ampk with aicar has been shown to stimulate fatty acid oxidation in huvecs [ 23 ] , so	result
+it remains possible that vegf transiently stimulates fatty acid oxidation due to ampk-mediated phosphorylation of acc .	hypothesis
+
+we next assayed	hypothesis
+whether mror2 was carrying out its inhibitory function through direct binding to wnt5a .	hypothesis
+two variants of the extracellular cysteine-rich wnt binding domain ( crd ) of mror2 were cloned in frame amino-terminal to an immunoglobulin heavy chain domain ( igg )	method
+as previously described and expressed in 293 cells [ 43 ] .	method
+one variant is comprised of the ror2 crd alone cloned downstream of an exogenous signal sequence ( ror2 crd-igg ) ;	method
+the other variant utilizes the endogenous ror2 signal sequence and possesses the full amino terminus of the ror2 protein ending at the carboxyl terminus of the crd ( ror2 nt crd-igg ) .	method
+the secreted mror2 crd-igg fusion proteins were then purified from conditioned media , bound	method
+to protein a beads , and tested for their ability to bind to purified wnt proteins .	method
+the smoothened receptor is a fz family member that possesses a crd domain but ,	fact
+rather than playing a role in wnt signaling , it functions exclusively hedgehog signal transmission .	fact
+as a negative control , purified smoothened ( smo ) crd-igg protein was also bound to beads and assayed for wnt binding .	method
+figure 5b shows	result
+that wnt5a protein specifically binds to the purified ror2 and fz4 crd domains , whereas only background binding to the smoothened crd occurs .	result
+wnt3a protein shows specific binding only to the fz4 crd-igg protein ( unpublished data ) .	result
+
+it has not been shown	problem
+whether ptp-pest binds directly to pstpip , but peptides derived from the conserved proline-rich cooh terminus of ptp-pest can compete the binding of ptp-hscf to pstpip ( spencer et al. , 1997 ) , consistent with the suggestion that ptp-pest binds to pstpip in a manner similar to ptp-hscf binding .	result
+in addition , while no previous data had shown that ptp-pest can dephosphorylate pstpip , the fact that pstpip is hyperphosphorylated in the ptp-pest ( -/- ) cells ( fig. 7 ) strongly suggests	result
+that ptp-pest plays a direct role in modulating the tyrosine phosphorylation level of pstpip .	implication
+ptp-hscf and another member of the pest family , ptp-pep , are generally not expressed in fibroblasts , and	result
+it is possible that ptp-pest regulates pstpip in fibroblasts the way ptp-hscf does in hematopoietic cells .	hypothesis
+the exact site that is hyperphosphorylated on pstpip in ptp-pest ( -/- ) cells is not known , and	problem
+the effects of this hyperphosphorylation on binding , for example , to wasp ( wu et al. , 1998b ) are still under investigation .	problem
+one of the observable effects appears	result
+to be an increase in the relative amount of cells found in the last stages of cytokinesis in a field of unsynchronized cells ( fig. 8 ) , possibly due to the role of pstpip in cleavage furrow assembly or disassembly .	result
+it is also possible	hypothesis
+that the increase of pstpip tyrosine phosphorylation is the result , and not the cause , of the increase of the number of cells in this phase .	hypothesis
+
+immunoprecipitation and coimmunoprecipitation were performed as described ( fazioli et al. , 1993 ) .	method
+briefly , cells were lysed on ice with buffer containing 1 % triton x-100 , 50 mm hepes ( ph 7.5 ) , 150 mm nacl , 5 mm egta , 1.5 mm mgcl2 , 10 % glycerol , 0.1 mm sodium orthovanadate , 2 mm phenylmethylphosphate fluoride , 2 mm sodium pyrophosphate 10 mug/ml aprotinin , and 10 mug/ml leupeptin .	method
+immunoprecipitations were performed for 2 h at 4degreesc , and	method
+immunocomplexes were recovered by adsorption to protein a-sepharose .	method
+after	method
+several washes with buffer containing 0.1 % triton x-100 , 20 mm hepes ( ph 7.6 ) , 10 % glycerol , and 150 mm nacl ( washing buffer ) , immunoprecipiates were resolved be sds-page and analyzed by immunoblotting .	method
+
+aly/+ , aly/aly , and c57bl/6j mice were purchased from clea japan .	method
+the mice were maintained under pathogen-free conditions and were handled in accordance with the guidelines for animal experimentation of tokushima university school of medicine .	method
+the experiments were initiated at 8-12 wk of age .	method
+ikkalpha-deficient mice were generated by gene	method
+targeting as described previously and maintained at osaka university 11 .	method
+
+the nature of the association of trf2 with atm was explored further	goal
+using in vitro pulldown experiments .	method
+gst-tagged fragments of atm were tested for their ability to bind purified trf2 protein expressed in a baculovirus system .	method
+in parallel , we used baculovirus-derived trf1 ,	method
+which was previously shown to interact with atm by co-ip ( kishi et al. 2001 ) .	method
+trf2 bound to two overlapping fragments of atm spanning amino acids 1439 to 2138 ( figure 4b ) .	result
+this region contains the fat domain and s1981 , the critical target of autophosphorylation ( bakkenist and kastan 2003 ) .	fact
+trf1 bound a different region of atm ( figure 4b ) ,	result
+demonstrating the specificity of the observed interactions .	result
+
+to examine further the nbs1 recruitment defect of cells expressing mdc1sdtddelta	goal
+we used the ' laser scissors ' technique to generate dna dsbs along defined sub-micrometre tracks in live cells ( limoli & ward , 1993 ) .	method
+in mdc1wt-expressing cells , the extent of nbs1 recruitment closely resembled that of mdc1 ( fig 4ea ) .	result
+by contrast ,	result
+although mdc1sdtddelta recruitment was indistinguishable from that of the mdc1wt protein , the nbs1 recruitment pattern was altered .	result
+thus ,	implication
+in mdc1sdtddelta cells , although nbs1 was recruited to the laser path , its pattern no longer resembled the broad distribution of mdc1 ; instead , nbs1 was restricted to a discrete micro-focal pattern lying within the broader track of mdc1 staining ( fig 4eb ) .	implication
+this indicates	implication
+that sdtd phosphorylation of mdc1 is required to retain nbs1 on gammah2ax-coupled chromatin , but that nbs1 might recognize other structures induced by laser microirradiation independently of mdc1 .	implication
+consistent with these results , and in line with our finding that the fha domain of nbs1 is required for mdc1 sdtd binding	implication
+similar micro-focal patterns of nbs1 recruitment were observed in mdc1-depleted cells and in cells in which the fha domain of nbs1 was mutated ( lukas et al , 2004 ) .	result
+
+dishes of cells were washed with pbs supplemented with 1 mm of sodium vanadate , harvested , lysed , and evaluated for protein content using the bio-rad protein assay .	method
+for immunoprecipitations of paxillin and cortactin , cells were lysed in ripa buffer ( 50 mm tris-hcl , ph 7.2 , 150 mm nacl , 0.1 % sds , 0.5 % sodium deoxycholate , 1 % nonidet p-40 ) .	method
+for fak , pstpip , and pstpip2 immunoprecipitations , cells were lysed by sonication in hnmetg ( 50 mm hepes , ph 7.5 , 150 mm nacl , 1.5 mm mgcl2 , 1 mm egta , 1 % triton x-100 , 10 % glycerol ) .	method
+for vinculin and p130cas , the lysis buffer used was tne buffer ( 10 mm tris hcl , ph 7.5 , 1 mm edta , 150 mm nacl , 1 % nonidet p-40 ) .	method
+lysis buffers were supplemented with 1 mm of sodium vanadate and complete ( tm ) protease inhibitor mixture ( boehringer mannheim gmbh ) .	method
+
+total f-actin fiber length was calculated after	method
+digitalizing tritc-phalloidin stained f-actin by using the metamorph image processing software .	method
+the edges of the cells were detected by the aid of a convolution kernel	method
+comparing the brightness of the neighboring pixels .	method
+after	method
+thresholding and separating from the background specimen , fiber lengths were determined and expressed as the percentage of the mean fiber length compared with the fiber length of mock-transfected fibroblasts .	method
+
+a more quantitative assay for migration is the chamber mobility assay ,	method
+where the ability of cells to translocate to the fibronectin-coated side of a perforated membrane is measured ( see materials and methods ) .	method
+once again , we compared the migration of ptp-pest ( +/- ) and ptp-pest ( -/- ) cells .	method
+as in the wound-healing assay , a significant decrease in motility was observed in the knockout cells ( fig. 2 e ) .	result
+to ensure that this effect is indeed due to the absence of ptp-pest	goal
+ptp-pest ( -/- ) cells were transfected with ptp-pest and a stably overexpressing clone was obtained .	method
+when tested in the same assay , these cells showed an increase in migration	result
+that was significant but still not comparable with wild-type levels .	result
+one possibility is	hypothesis
+that overexpression of ptp-pest could also have deleterious effects on cell migration , as is the case with ptp1b ( liu et al. , 1998 ) .	hypothesis
+to test this hypothesis , we are currently trying	goal
+to obtain clones expressing more physiological levels of ptp-pest , as well as different constructs and catalytically inactive mutants of the phosphatase , and verify the effects on this phenotype and the others described below .	method
+
+to investigate whether membrane association of tiam1 is also required for the induction of other rac-mediated signaling pathways besides membrane ruffling	goal
+the activity of jnk was determined after cotransfection with different tiam1 mutants ( see materials and methods ) .	method
+both in cos-7 cells and nih3t3 cells , cotransfection of fulllength tiam1 led to an almost sevenfold stimulation of jnk activity , similar to constitutively activated ( v12 ) rac1 ( fig. 9 a ) .	result
+cotransfection of tagged mitogen-activated protein kinase ( mapk ) with full-length or mutant tiam1 or ( v12 ) rac did not result in activation of mapk ( not shown ) .	result
+the stimulation of jnk by tiam1 was dependent on the activation of rac ,	result
+since cotransfection of dominantnegative ( n17 ) rac1 partly blocked the activation of jnk by tiam1 ( fig. 9 a ) .	result
+higher amounts of ( n17 ) rac interfered with the expression of jnk .	result
+furthermore , a deletion in the catalytic dh domain of tiam1 prevented jnk activation ( not shown ) .	result
+cotransfection of dominant-negative ( n17 ) cdc42 did not interfere with the activation of jnk by tiam1 ( data not shown ) .	result
+transfection of c1199 tiam1 stimulated jnk activity to a similar extent as fl1591 ( fig. 9 b ) .	result
+however , shorter cooh-terminal tiam1 fragments such as c682 and c580 tiam1 ,	result
+which did not localize to the plasma membrane , were not able to activate jnk above background levels .	result
+also , mutant c1199-deltaphn tiam1 ,	result
+which did not localize to the plasma membrane because of the deletion in the nh2-terminal ph domain , was unable to activate jnk ( fig. 9 b ) .	result
+ms-c580 tiam1 caused no stimulation of jnk activity ( fig. 9 b ) , and	result
+neither did ms-c1199-deltaphn or ms-fl1591-deltaphn tiam1 proteins ( data not shown ) .	result
+these proteins , however , induced membrane ruffling and were present at the plasma membrane ( fig. 6 ) .	result
+a possible explanation for this somewhat unexpected result is	implication
+that activation of endogenous rac by ms-containing tiam1 proteins is sufficient for induction of membrane ruffling but not for stimulation of jnk .	implication
+alternatively , the lack of induction of jnk activity is caused by the different ultrastructural localization of the ms-c580 tiam1 protein	hypothesis
+compare figs. 5 and 7 ) or may reflect the need for an intact nh2-terminal ph domain .	hypothesis
+interestingly , similar results were obtained with membrane-targeted p110 phosphoinositide-3-kinase	result
+which was able to stimulate membrane ruffling but not gene transcription from the jun-inducible fos promoter ( reif et al. , 1996 ) .	result
+whatever the mechanism , these results indicate	implication
+that the localization of tiam1 at the plasma membrane is also required for rac-mediated stimulation of jnk activity .	implication
+
+since proper response to nutrient limitation is also important for organisms to survive under unfavorable conditions 43 , 44	fact
+we investigated the effect of draga activity on adult animal viability in response to starvation .	method
+targeted expression of constitutively active draga q61l to the fat body had no significant effect on survival in animals given a normal diet , but resulted in a significantly accelerated rate of death under starvation conditions ( fig. 8a , b ) .	result
+in contrast , animals expressing the dominant negative draga t16n were more resistant to death induced by starvation .	result
+similar effects on starvation survival were observed with ubiquitous expression of draga transgenes ( data not shown ) .	result
+taken together these data suggest	implication
+that the activity of draga is important for signaling in response to nutrient starvation and also is critical for animal survival .	implication
+
+as shown in fig. 1 d , the pkc-specific inhibitor gf109203x ( toullec et al. , 1991 ) is capable of	result
+reversing the dissolution of actin stress fibers by ras .	result
+this effect is observed in the presence of 6 mum of the inhibitor ( fig. 1 d ) .	result
+200 nm of the compound	result
+which had been shown to be sufficient for blocking c - and n-type pkc isotype kinase activity in cell-free extracts ( fig. 2 a ) ( uberall et al. , 1997 ) , is , however , without an effect on the ras-mediated stress fiber dissolution ( fig. 1 c ) .	result
+6 mum gf109203x corresponds roughly to the ic50 of the compound against	result
+the atypical pkc-zeta ( fig. 2 b , see also martiny-baron et al. , 1993 ) , and as shown in fig. 2 c , exerts a similar effect on pkc-lambda , suggesting that if a pkc is involved in the ras-induced reorganization of the actin cytoskeleton , it should be an atypical ( a- ) , rather than a conventional ( c- ) or novel ( n- ) type pkc isoform .	result
+
+cells were plated on fibronectin-coated slides ( described above ) for 20 min or 3 h .	method
+they were then fixed 20 min with 4 % ( wt/vol ) pfa in pbs , and permeabilized with 0.1 % ( vol/vol ) triton x-100 in 4 % pfa for another 20 min .	method
+the slides were blocked with 1 % ( wt/vol ) bsa in pbs for 20 min .	method
+the cells were then incubated with the antivinculin antibody ( 1 : 400 dilution in pbs ) for 1 h at room temperature , washed three times with pbs , and stained with a mixture of fitc-conjugated anti-mouse antibody ( 1:200 ) and 4 mul/well of tritc-conjugated phalloidin ( molecular probes inc. ) .	method
+after	method
+being washed three times with pbs , the coverslips were mounted in a 1:1 mixture of glycerol and 2.5 % 1,4-diazabicyclo [ 2.2.2 ] octane ( dabco ; sigma chemical co. ) in pbs .	method
+the cells were visualized with a nikon fluorescence microscope .	method
+the number of focal adhesions in each cell was evaluated from photographs of the vinculin staining .	method
+
+we also investigated the functional relationship between rag and rheb in vivo through genetic studies in drosophila .	goal
+to test whether dragc is required for rheb to stimulate cell growth	goal
+the effect of rheb overexpression on fat body cell size was examined in dragc-/ - cells .	method
+mutation of dragc did not block the growth stimulatory effect of rheb overexpression ( fig. 6a , b ) .	result
+in fact , rheb overexpression induced a greater relative cell size increase in a dragc-/ - genetic background .	result
+similarly , rheb overexpression has been shown to have a stronger effect on cell size under starvation conditions38 ,	result
+further suggesting that nutrient signaling is impaired in dragc mutants .	implication
+we also examined the effect of rheb loss of function under conditions of draga q61l activation , and found	method
+that rheb mutant cells were smaller than neighboring wild type cells both in control animals and in animals ubiquitously expressing draga q61l throughout the fat body ( fig 6c , d ) .	result
+these data indicate	implication
+that draga and dragc are not required for rheb to stimulate cell growth .	implication
+we also found	result
+that the increase in cell size in response to draga q61l expression was partially or completely suppressed in two different rheb hypomorphic mutant backgrounds ( data not shown ) , indicating that rheb activity may be required for the growth effects of draga .	result
+together , these data suggest	implication
+that rag acts parallel or upstream of rheb to stimulate cell growth .	implication
+
+activation of atm also takes	fact
+place in response to telomere damage .	fact
+when telomeres become uncapped due to inhibition of trf2	fact
+s1981-phosphorylated atm associates with telomeres ( takai et al. 2003 ) .	fact
+furthermore , atm targets become phosphorylated in aging cells with shortened telomeres ( d'adda di fagagna et al. 2003 ) .	fact
+genetic evidence for a role of atm in the telomere damage pathway is provided by the diminished ability of ataxia telangiectasia ( a-t ) cells	result
+to mount a dna damage response after telomere uncapping ( karlseder et al. 1999 ; takai et al. 2003 ) .	result
+however , several lines of evidence suggest	implication
+that a second pikk ( phosphatidylinositol 3-kinase-like kinase ) , such as atr or dna-pkcs , can transduce the telomere damage signal in the absence of atm ( takai et al. 2003 ; wong et al. 2003 ) .	implication
+
+there are conflicting data in the literature regarding the mechanism	problem
+by which wnt5a and other so-called noncanonical wnt protein signals .	problem
+to understand how signals like wnts influence cells	goal
+one must discriminate between early and late effects and measure those effects in a concentration-dependent manner .	method
+to that end , we have purified active wnt5a protein and established quantitative assays for	method
+signaling .	method
+we show for the first time	result
+that soluble wnt5a protein is able to directly inhibit canonical wnt signaling .	result
+treatment of cells with purified protein over short time intervals is sufficient	result
+to inhibit the activation of the tcf/lef-driven luciferase reporter supertopflash ( stf ) .	result
+the inhibition observed	result
+is dose responsive , occurs downstream of beta-catenin stabilization , and is ptx insensitive .	result
+we also show	implication
+that an alternative wnt receptor , ror2 , is required for wnt5a-mediated inhibition of canonical signaling and that the extracellular , cysteine-rich wnt binding domain and intracellular , cytoplasmic domain are crucial for the receptor 's inhibitory function .	implication
+whereas wnt5a protein is usually associated with noncanonical wnt signaling , we show	fact
+that wnt5a can activate wnt/beta-catenin signaling in the presence of fz 4 and lrp5 .	result
+based on these and other observations , we propose a model wherein receptor context dictates wnt signaling output ,	hypothesis
+suggesting a new layer of regulatory complexity in the wnt signaling cascade with important implications in development and disease .	problem
+
+african green monkey kidney fibroblasts ( cos-1 , 106/100-mm dish ) were transfected with 15 mug of circular plasmid dna per dish by lipofectin reagents ,	method
+as described by the manufacturer .	method
+48 h posttransfection , cells were lysed in 1 ml lysis buffer ( 150 mm nacl , 20 mm n-2-hydroxyethylpiperazine-n'-2-ethanesulfonic acid [ hepes , ph 7.59 ] , 1 % nonidet p-40 ( vol/ vol ) , 50 mug/ml each aprotinin and leupeptin , and 1 mm phenyl-methylsulfonyl fluoride ) .	method
+lysates were purified by using a ni2+-resin batch procedure , and	method
+equal amounts of recombinant pkc isotypes were subjected to an enzymatic pkc assay as described elsewhere ( baier-bitterlich et al. , 1996 ; uberall et al. , 1997 ; kampfer et al. , 1998 ) .	method
+enzyme activities of recombinant pkc-isotypes alpha , lambda , and zeta are expressed as cofactor-dependent phosphorylation of the [ a25s ] synthetic pkc peptide ( rfarkgslrqknvy ; presenting the pseudosubstrate sequence of pkc-alpha with an alanine to serine substitution ) .	method
+the concentrations of substrate peptide and cofactors used are : 50 mug/ml [ a25s ] , 280 mug/ml ptdser , 10 mum tpa , and 1 mm cacl2 .	method
+expression of the fusion tag peptide cooh-terminal of pkc-alpha and pkc-lambda	result
+and pkc-zeta did not affect the kinase activity in vitro ( uberall et al. , 1997 ) .	result
+
+statistics .	none
+unless stated otherwise	method
+results are expressed as means +/ - sd .	method
+statistically significant differences were determined using a student 's t-test ,	method
+using p < 0.05 as significant using statview software .	method
+
+finally , some proteins have previously been reported	result
+to interact with egfr ( van delfi et al , 1997 ) , such as eps15 ( schumacher et al , 1995 ) .	result
+in our study , we see eps15 in pull-downs with a number of bait peptides , but always with a ratio of one to one , indicating no direct binding to the bait peptides .	result
+this would in any case be expected	implication
+since eps15 has no sh2 or ptb domain , and rather is recruited to egfr in a larger protein complex .	result
+
+we intended	goal
+to evaluate the role of nik in tnfr-i and ltbetar signaling with the use of in vivo mouse models , rather than introducing enforced gene-expression systems .	goal
+to this end , we transfected efs ( which express both tnfr-i and ltbetar ) only with a reporter plasmid	method
+that has three repeats of the nf-kappab site upstream of a minimal thymidine kinase promoter and a luciferase gene , and then stimulated the transfected efs with tnf or agonistic anti-ltbetar mab ( ac.h6 ) .	method
+efs from both wild-type and aly mice showed upregulation of luciferase activity in response to human tnf	result
+fig. 2 a ) .	result
+the normal level of tnf responsiveness in aly mice is consistent with the results shown above ( fig. 1 ) .	result
+in contrast to tnf stimulation , nf-kappab activation in response to agonistic anti-ltbetar mab was significantly reduced in aly mouse efs ,	result
+indicating that nik is involved in ltbetar signaling ( fig. 2 a ) .	implication
+
+we previously reported	result
+that mitogenic stimulation of resting ccl39 cells led to a rapid nuclear translocation of mapks into the nucleus ( 27 ) .	result
+translocation into the nucleus correlated nicely with the persistent activation of mapk during the g1 phase of the cell cycle .	result
+for example , serum or alpha-thrombin , two potent mitogens of ccl39 cells , induced persistent mapk activation and nuclear localization .	result
+in contrast , the thrombin receptor peptide activator or tpa , which transiently activates mapk , failed	result
+to induce nuclear translocation of mapk ( 27 ) .	result
+this result led	hypothesis
+us to postulate that the p42/p44 mapk cascade itself controls the nuclear translocation of mapk .	hypothesis
+therefore , we tested	method
+whether addition of the specific mek inhibitor pd 98059 ( 12 ) was sufficient to block the entry of p42/p44 mapk in the nucleus in response to serum .	method
+this inhibitor has been previously shown	result
+to inhibit by up to 90 % mapk activation without affecting the activation of other mapk cascades , such as the jnk and p38 mapk pathways ( 2 ) .	result
+in accordance to our and others ' previous observations , p42/p44 mapk immunostaining is predominantly cytoplasmic in serum-deprived cells ( fig. 1 a ) and in cells treated by the mek inhibitor pd 98059 alone ( fig. 1 d ) ,	result
+whereas within 3 h of stimulation by 10 % fcs , it is relocated markedly in the nucleus ( fig. 1 b ) .	result
+as depicted in fig. 1 c , the addition of the mek inhibitor pd 98059 ( 30 mum ) at the time of serum addition was sufficient	result
+to block nuclear translocation of p42/p44 mapk .	result
+as was reported by alessi et al. ( 2 ) we found	result
+that mapk activity was not totally inhibited by 30 mum of pd 98059 compound in ccl39 cells ( up to 80 % inhibition ) .	result
+this incomplete inhibition could explain	hypothesis
+why in certain cells some nuclear localization of p42/p44 mapk remained .	hypothesis
+in these cells it is possible	hypothesis
+that mapk stimulation by serum may be extremely potent .	hypothesis
+however , this result indicates	implication
+that activation of the p42/p44 mapk signaling cascade in response to serum is absolutely required for nuclear translocation of p42/p44 mapk .	implication
+
+one day prior to transfection , approximately 5 106 293t cells were plated in 10-cm dishes .	method
+cells were transfected with 1 mug of flag-atm dna ( canman et al. 1998 ) and 9 mug of n-terminally myc-tagged trf2 ( karlseder et al. 2002 ) or trf1 in a plpc vector backbone ( gift of s. lowe , cold spring harbor laboratory ) or vector alone using capo4 coprecipitation .	method
+two days after transfection , cells were harvested in media and divided into three equal fractions ,	method
+which were exposed to 0 , 0.3 , or 0.6 gy ir .	method
+cells were allowed	method
+to recover for 30 min , washed with pbs , and resuspended in 250 mul of lysis buffer ( 50 mm tris [ ph 7.4 ] , 1 % triton x-100 , 0.1 % sds , 150 mm nacl , 1 mm edta , 1 mm dtt , 1 mm pmsf , with a complete mini-protease inhibitor tablet [ roche , basel , switzerland ] per 10 ml ) .	method
+the nacl concentration was raised to 400 mm	method
+and the lysate was incubated on ice for 5 min .	method
+the nacl concentration was reduced to 200 mm , cell debris was removed by centrifugation , and	method
+an equal volume of laemmli buffer was added to the lysate .	method
+
+quantitative rt-pcr analysis was performed	method
+to ascertain the expression of ror2 in 293 and l cells .	goal
+a specific ror2 transcript in the l cell sample did not emerge until after 40 cycles of amplification ,	result
+indicating that ror2 is expressed in almost immeasurably low abundance in l cells .	implication
+quantification of the real-time data revealed	result
+that ror2 transcripts were over 700 times more abundant in 293 cells than in l cells ( figure 6c ) .	result
+mror2 expression thus appears	implication
+to be required for wnt5a-mediated inhibition of wnt/beta-catenin signaling in mouse l cells .	implication
+
+as the mechanism	problem
+by which ras affects actin filament structures are incompletely understood , it can be only speculated with regard to the function of apkc-lambda or apkc-zeta in this pathway .	problem
+the disassembly of actin stress fibers has been correlated to the accumulation of inactive , gdp-charged rhoa ( qui et al. , 1995a , b ) .	fact
+activation of rhoa by an exchange of the gdp by a gtp was found	result
+to stimulate stress fiber formation ( ridley and hall , 1992 ) .	result
+these findings suggest	implication
+that the ras-induced disassembly of actin stress fibers is the result of a conversion of the active , gtp-charged rho to the inactive gdp-bound form .	implication
+models for a biochemical linkage between the ras and rho proteins have been proposed ( boguski et al. , 1992 ; nobes and hall , 1994 ; chant and stowers , 1995 ) .	hypothesis
+in one simple model , the ras/rho pathway includes p120gap , the ras gtpase-activating protein which may also act as a ras effector ( chant and stowers , 1995 ) and p190 , a p120gap-associated protein	hypothesis
+which exhibits a rho-specific gtpase-activating domain ( settleman et al. , 1992 ; foster et al. , 1994 ) .	hypothesis
+phosphorylation by apkc-lambda and/or apkc-zeta may enhance the activity of p190rho-gap , resulting in an increased conversion of rhogtp	hypothesis
+to rhogdp and stress fiber dissolution .	hypothesis
+tyrosine phosphorylation of p190 by c-src has been shown	result
+to be correlated with egf-induced stress fiber disassembly ( chang et al. , 1995 ) .	result
+evidence for a pkc-catalyzed serine/threonine phosphorylation of p190 , however , is still lacking .	problem
+alternatively , apkc-lambda and/or apkc-zeta may enhance the rhogdp level by	hypothesis
+inhibiting rho-gdi , or exchange factors ( gef ) acting on rho , like smggds , rap1 , dbl , ect2 , and ost ( hiraoka et al. , 1992 ; miki et al. , 1993 ; horii et al. , 1994 ) .	hypothesis
+however , models	result
+in which the ras-induced disassembly of actin stress fibers are described as resulting exclusively from a ras-mediated conversion of rhogtp to rhogdp are inconsistent with the findings demonstrating an activation of rho by ras as essential for transformation and mitogenesis by oncogenic ras ( prendergast et al. , 1995 ; qui et al. , 1995a , b ; olson et al. , 1998 ) .	result
+
+francisella tularensis , a gram-negative facultative intracellular pathogen infecting principally macrophages and monocytes , is the etiological agent of tularemia .	fact
+macrophage responses to f. tularensis infection include the production of pro-inflammatory cytokines such as interleukin ( il ) -12 ,	fact
+which is critical for immunity against infection .	fact
+molecular mechanisms regulating production of these inflammatory mediators are poorly understood .	fact
+herein we report that the sh2 domain-containing inositol phosphatase ( ship ) is phosphorylated upon infection of primary murine macrophages with the genetically related f. novicida	fact
+and negatively regulates f. novicida-induced cytokine production .	fact
+analyses of the molecular details revealed	method
+that in addition to activating the map kinases , f. novicida infection also activated the phosphatidylinositol 3-kinase ( pi3k ) /akt pathway in these cells .	result
+interestingly , ship-deficient macrophages displayed enhanced akt activation upon f. novicida infection ,	result
+suggesting elevated pi3k-dependent activation pathways in absence of ship .	result
+inhibition of pi3k/akt resulted in suppression of f. novicida-induced cytokine production through the inhibition of nfkappab .	result
+consistently , macrophages lacking ship displayed enhanced nfkappab-driven gene transcription ,	result
+whereas overexpression of ship led to decreased nfkappab activation .	result
+thus , we propose	hypothesis
+that ship negatively regulates f. novicida-induced inflammatory cytokine response by antagonizing the pi3k/akt pathway and suppressing nfkappab-mediated gene transcription .	hypothesis
+a detailed analysis of phosphoinositide signaling may provide valuable clues for	problem
+better understanding the pathogenesis of tularemia .	problem
+
+for il-6 mrna detection , ef cells cultured in 100-mm plates were treated with il-1beta or tnf-alpha for 3 h at 37degreesc .	method
+total rna was extracted from ef cells with rnazol ( tel-test , inc. , friendswood , tx ) .	method
+northern blot analysis was performed as previously described ( 28 ) using a mouse il-6 cdna probe prepared by pcr from commercial mouse il-6 cdna template and oligonucleotides ( clontech , palo alto , ca ) .	method
+for detection of secreted il-6 protein , ef ( 5 x 104 /well ) and sf ( 104/well ) cells were incubated overnight in flat-bottomed microtiter plates in 10 % fcs-dmem .	method
+after a 2-4-h incubation with low endotoxin 1 % fcs-rpmi-1640 medium ( sigma chemical co. , st. louis , mo ) , cells were treated for 8 h with mouse il-1beta in fresh medium .	method
+supernatants were then collected and analyzed for il-6 using commercial elisa kits ( from endogen , inc. , woburn , ma , or genzyme corp. ) , with recombinant mouse il-6 as a standard .	method
+
+the systematic profiling of interaction partners not only allows a global view of interaction sites , but also reveals important detailed information	method
+that can be exploited further for the understanding of signaling processes , as will be illustrated with the example of stat5 binding to egfr .	method
+stat5 is a transcription factor	fact
+that is rapidly activated upon egf stimulation .	fact
+it then moves to the nucleus ,	fact
+where it is involved in the regulation of gene transcription .	fact
+experiments with truncated egfr clones suggested	implication
+that the region between tyrosine residue y0978 and y0998 was necessary for activation of stat5 ( xia et al , 2002 ) .	implication
+however , it remained unclear	hypothesis
+whether this proposed interaction was direct or through a multiprotein complex .	hypothesis
+systematic interaction profiling of all tyrosine residues of the erbb-receptor family revealed	result
+stat5 as a specific interaction partner to the phosphorylated bait peptides y978 and y998 of the egf receptor and y984 of erbb4 .	result
+we confirmed the direct interaction of stat5 and egfr by immunoprecipitation .	result
+when egfr was immunoprecipitated from whole-cell lysates of cells under normal growth conditions ( basal stimulation in 10 % fbs )	method
+stat5 was identified by western blot and vice versa ( figure 5 ) .	method
+to further confirm this finding , we added synthetic phosphorylated peptides py978 and py998 to the immunoprecipitation reaction ,	goal
+which resulted in reduced stat5 detection after egfr immunoprecipitation and in reduced egfr detection after stat5 immunoprecipitation .	result
+the unphosphorylated counterparts of these peptides had no influence on the immunoprecipitation reactions ( figure 5a ) . figure 5b shows	result
+that the interaction of stat5 depended on egfr phosphorylation , which peaked after two minutes of egf stimulation , and that normal growing hela cells also have a basal level of phosphorylated egfr .	result
+
+active ras ( ras-gtp ) triggers a number of signaling cascades , among	fact
+which is the one connecting ras to rac , a member of the rho subfamily of small gtpases .	fact
+there is evidence	fact
+that sos-1 is also active at this step .	fact
+first , sos-1 contains a dbl homology domain in tandem with a pleckstrin homology domain , a module responsible for gef activity on rho gtpases ( cerione and zheng , 1996 ; nimnual et al. , 1998 ) .	fact
+second , and most importantly , sos-1 has been shown	result
+to form a tricomplex in vivo with two signaling molecules , eps8 ( fazioli et al. , 1993 ) and e3b1 ( also known as abi-1 ) ( shi et al. , 1995 ; biesova et al. , 1997 ) .	result
+e3b1 contains a sh3 domain and binds sos-1 ( scita et al. , 1999 ; fan and goff , 2000 ) .	result
+in addition , e3b1 binds to the sh3 domain of eps8 ( biesova et al. , 1997 ) .	result
+thus e3b1 acts as a scaffold protein ,	implication
+which holds together sos-1 and eps8 .	implication
+the tricomplex sos-1-e3b1-eps8 ( s/e/e8 ) is endowed with rac gef activity in vitro ( scita et al. , 1999 ) .	result
+thus , the sum of the above observation raises the possibility	implication
+that sos-1 might function at different step in the signaling cascade , acting as a ras-gef and a rac-gef , respectively .	implication
+a number of outstanding questions need clarification , however , before such a model could be accepted	problem
+does a trimeric s/e/e8 complex exist under physiological conditions ?	problem
+how is the specificity of sos-1 directed toward ras or rac ?	problem
+does the putative dual function of sos-1 provide a mechanistic framework for the coordinated activation of ras and rac ?	problem
+the present studies were undertaken	goal
+to elucidate these questions .	goal
+
+confluent cells were lysed in a lysis buffer ( 0.1 % triton x-100 , 50 mm tris-hcl , ph 7.5 , 5 mm edta , 1 mm phenylmethanesulfonyl fluoride , 1 mm benzamidine , 40 mm paranitrophenylphosphate , and 200 mum orthovanadate ) .	method
+25 mug of detergent-extracted proteins were separated by sds-page on a 12.5 % ( wt/vol ) polyacrylamide gel ( 30:0 .2 ) and electrophoretically transferred to immobilon-p membrane ( millipore corp. , bedford , ma ) .	method
+immunoprobing was performed with the antibody e1b	method
+as previously described ( 28 ) .	method
+
+pgl4.10 vector ( promega , madison wi , usa ) was used for construction of luciferase reporter plasmids .	method
+a reporter plasmid ( designated p21up/gl4 ) containing a human p21 promoter region encompassing from -2266 to -1875 was described previously	none
+[ 14 ] .	none
+the +1 position represents the transcription start site of the downstream promoter .	fact
+in this study , we constructed two new luciferase reporter plasmids , p21down/gl4 and p21core/gl4 ,	method
+that contain a downstream promoter region from -168 to +66 and a short dna stretch from -5 to +66 of the p21 downstream promoter , respectively .	method
+these constructs were generated by a pcr-based strategy using a reporter plasmid	method
+encompassing from -2677 to +66 , which has been named p21luc1 as previously described [ 14 ] .	method
+primer sets	method
+to amplify dna fragments from -168 to +66 and from -5 to +66 sequences were as follows : -168 to +66 forward , 5'-ctcgagggcctgctggaactcggccag ; -5 to +66 forward , 5'-ctcgaggcgccagctgaggtgtgagca ; and common reverse , 5'-agatctcggcgaatccgcgcccagct .	method
+
+the loxp-kanmx4-loxp cassette was integrated into the pex14 locus and excised afterwards by the cre recombinase expressed from plasmid psh47 ( guldener et al. , 1996 ) .	method
+subsequently , pex5 was deleted	method
+as described above .	method
+
+in resting human t cells ( as well as in jurkat t cells and in raji b cells ) , pag is expressed as a constitutively tyrosine-phosphorylated polypeptide and binds csk in the absence of any stimuli ( fig. 7b and fig. c , and fig. 9 b ) .	result
+moreover , immediately after t cell activation , pag becomes dephosphorylated and releases csk ( fig. 9 b ) .	result
+together with our observation that pag is an integral plasma membrane protein ( fig. 6 a ) ,	result
+these data would be compatible with a model proposing that in resting t cells , the constitutively tyrosine-phosphorylated pag targets a fraction of csk to the plasma membrane and thus brings it into proximity with its substrates , the src family kinases .	implication
+csk then can phosphorylate the cooh-terminal negative regulatory tyrosine residues , resulting in downregulation of the src kinases enzymatic activity and , as a consequence , suppression of signal transduction .	implication
+
+most recently , major progress has been made in the understanding of the molecular mechanisms underlying translocation of	fact
+signaling molecules ( e.g. , phospholipase c gamma1 , slp-76 , etc. ) from the cytosol to the plasma membrane upon t cell activation .	fact
+thus , a novel group of transmembrane proteins has been identified	fact
+whose cytoplasmic domains contain multiple tyrosine-based signaling motifs that provide docking sites for the sh2 domains of cytosolic effector molecules after phosphorylation by src or syk family ptks .	fact
+these molecules have collectively been termed	fact
+transmembrane adaptor proteins 47 . until now , three transmembrane adaptor proteins have been identified , namely lat 13 , trim 38 , and shp2-interacting transmembrane adaptor protein 44 .	fact
+in this report , we describe identification , purification , nano es ms/ms sequencing , and molecular cloning of a novel transmembrane adaptor protein	method
+that we termed pag .	method
+
+we previously constructed various kinds of mutant tlps [ 29 ] .	method
+among them , n37e and r52e have weakened binding ability to tfiia , and	fact
+n37e is a more severe mutant than r52e for tfiia binding , whereas r55e binds to tfiia as strongly as does wild-type tlp .	fact
+in this study , we first investigated in	goal
+detail the intracellular tfiia-binding strength of these mutants by co-immunoprecipitation assays .	method
+it was confirmed	result
+that wild-type tlp and r55e exhibited significant binding to tfiia , whereas n37e did not bind to tfiia ( fig. 1 ) .	result
+we further investigated processed and unprocessed forms of tfiiaalpha/beta and found	goal
+that r52e binds to the alpha and beta subunits of tfiia but does not bind to uncleaved tfiiaalphabeta ( fig. 1 , lane 12 ) .	result
+
+the regulatory influence of ship on f. novicida-induced il-12 , il-6 , and rantes was also observed at different multiplicities of infection ( mois ; figure 2a-2c ) ,	result
+suggesting that the negative regulatory effect of ship is independent of bacterial numbers infecting the macrophages .	implication
+in addition , the viability of the bacteria is not essential for the negative influence of ship	implication
+as macrophages infected with heat-killed bacteria displayed similar cytokine responses as those infected with live bacteria ( figure 2d-2f ) .	result
+likewise , ship also down-regulated	result
+f. tularensis lvs-induced il-12 , il-6 , and rantes production ( figure 2d-2f ) .	result
+
+since little is known of the intracellular localization and requirements of gds proteins to stimulate rho-like gtpases	problem
+we analyzed the conditions for tiam1 to stimulate racdependent membrane ruffling and jnk activity .	method
+for this , truncated tiam1 proteins , or proteins that contain small deletions in each of the conserved domains , were expressed in fibroblast cells and cos cells , and	method
+their intracellular localization and biological activity were analyzed by confocal microscopy , immunoelectron microscopy , and analysis of jnk activity .	method
+we demonstrate	implication
+that membrane association of tiam1 is absolutely required for rac-dependent induction of membrane ruffling and stimulation of jnk activity .	implication
+membrane association of tiam1 is accomplished through the nh2-terminal ph domain , but not the cooh-terminal ph domain or the dhr domain .	result
+moreover , ph domain - dependent membrane association of tiam1 could be induced by serum .	result
+these results suggest	implication
+that the controlled membrane association of tiam1 is an important factor in the activation of distinct rac-mediated signaling pathways .	implication
+
+previously , we demonstrated	result
+that tlp , which is one of the tbp family proteins , is involved in regulation of the upstream promoter [ 14 ] .	result
+the most attractive property of tlp is its stronger tfiia-binding ability than that of tbp [ 29,30 ] ,	fact
+although the functional significance of this property has not been elucidated .	problem
+bryant et al. [ 31 ] reported	result
+that mutant tbps with decreased tfiia-binding ability showed decreased transcription activation function in vitro .	result
+in this study , we demonstrated	result
+that asn37 and arg52 of tlp , which correspond to tfiia-reactive asn189 and arg205 of tbp , respectively [ 31 ] , are required for tfiia binding in human cells ( fig. 1 ) .	result
+n37e and r52e exhibited decreased transcriptional activation functions for the endogenous upstream promoter ,	result
+while r55e , which has substantial tfiia-binding capacity , exhibited native function ( fig. 2c ) .	result
+these mutant tlps also exhibited decreased transcriptional activation function for the upstream promoter in an exogenous reporter plasmid ( fig. 2d ) .	result
+consequently , tfiia-binding ability of tlp is thought	implication
+to be required for tlp-dependent transcriptional activation .	implication
+although r52e had binding ability to processed tfiia ( fig. 1 , lane 12 )	result
+it exhibited little transcriptional function .	result
+because unprocessed tfiia has been reported to be transcriptionally active [ 28 ] , it is possible	result
+that binding to unprocessed tfiia is required for tlp function to activate p21 upstream promoter .	hypothesis
+
+based on these results , primary pag immunoprecipitates obtained from lysates of unstimulated or pervanadate-treated hematopoietic cells were analyzed for the presence of the above cytoplasmic	method
+signaling molecules .	method
+small amounts of fyn ( but not lck ; not shown ) were found in pag immunoprecipitates prepared from unstimulated peripheral blood t cells ( fig. 7 b ) but not jurkat or raji cells ( not shown ) .	result
+moreover , fyn and pag also associated with each other	result
+when coexpressed in cos cells ( fig. 7 e ) .	result
+however , the interaction between fyn and pag seems	result
+to be independent from the tyrosine phosphorylation status of pag , as it was not altered after pp1 treatment of the resting t cells ( which caused a strong decrease of pag tyrosine phosphorylation ; fig. 7b ) .	result
+
+for rnai experiments in hela cells , cells were diluted and plated into 6-well plates at about 30 % confluency .	method
+24 hrs later , 20 mum of sirna ( final concentration ) were transfected	method
+using lipofectamine ( invitrogen ) following manufacturer 's protocol .	method
+
+mdc1 binds to gammah2ax flanking unrepaired dna dsbs , and then acts as a ' mediator '	fact
+to recruit other ddr factors to such sites ( stucki & jackson , 2006 ) .	fact
+for example , the atm-phosphorylated tqxf motifs on mdc1 are recognized by the ubiquitin e3 ligase enzyme rnf8 ( huen et al , 2007 ; kolas et al , 2007 ; mailand et al , 2007 ) .	fact
+rnf8 then generates ubiquitin adducts on histone h2a -- and possibly other chromatin components	fact
+which lead to irif formation by 53bp1 and brca1 ( huen et al , 2007 ; mailand et al , 2007 ) .	fact
+this paper describes	implication
+how mdc1 facilitates the accumulation and retention of the mrn complex in irif , indicating a new mechanism for mdc1 mediator function .	implication
+specifically -- and in contrast to the situation for 53bp1 and brca1 -- our work highlights	implication
+how phospho-dependent interactions between mdc1 and mrn might precede the detection and signalling of dna damage .	implication
+this characteristic of mdc1-mrn binding might therefore allow this complex	hypothesis
+to be efficiently and rapidly recruited to sites of dna damage , thus ensuring that the ddr is launched without delay .	hypothesis
+by contrast , the atm - and rnf8-dependent nature of 53bp1 and brca1 recruitment means	implication
+that it is likely to happen more slowly , possibly to ensure that the chromatin alterations and other processes triggered by these proteins are invoked only at the right time and in the correct chromatin context .	implication
+this model	implication
+in which various factors are recruited with different kinetics and factor dependencies -- suggests a more complex , hierarchical and highly regulated ddr than has hitherto been apparent .	implication
+
+tiam1 was originally identified in t-lymphoma cells as an invasion - and metastasis-inducing gene ( habets et al. , 1994 ) .	result
+the predicted tiam1 protein consists of 1,591 amino acids and contains a dbl homology ( dh ) domain .	fact
+this domain is present in gds proteins for rho-like gtpases and is considered	fact
+to be the catalytic domain ( hart et al. , 1994 ) .	fact
+dh domains are found in a rapidly expanding group of proteins ,	result
+many of which are encoded by transforming genes that were identified after transfection of genomic dna or cdna libraries into nih3t3 cells ( cerione and zheng , 1996 ; collard , 1996 ) .	method
+a number of these proteins , like dbl , ost , cdc24 , lbc , and vav were shown to activate rho-like gtpases ( hart et al. , 1991 ; horii et al. , 1994 ; zheng et al. , 1994 , 1995 ; olson et al. , 1996 ) .	result
+tiam1 is the only gds protein identified	result
+that specifically activates rac in vitro as well as in vivo ( michiels et al. , 1995 ) .	result
+in fibroblasts , tiam1 induces the formation of membrane ruffles , similarly to constitutively activated v12rac1 ( michiels et al. , 1995 ) .	result
+the tiam1-induced phenotype is inhibited by coexpression of dominant-negative mutant ( n17 ) rac1 , but not by coexpression of ( n17 ) cdc42 or by inactivation of rhoa with c3 transferase ( michiels et al. , 1995 ; collard , 1996 ) .	result
+this indicates	implication
+that the tiam1-induced membrane ruffling is primarily caused by activation of rac and that other rho-like gtpases are not involved .	implication
+moreover , v12rac1 , but not v14rhoa , induces an invasive phenotype in	implication
+t-lymphoma cells , similar to tiam1 , suggesting that tiam1-induced invasiveness is also caused by activation of rac ( michiels et al. , 1995 ) .	implication
+
+it has previously been demonstrated	result
+that substitution of an alanine by a glutamate within the pseudosubstrate domain of pkc isotypes generates ca mutants with reduced cofactor requirements .	result
+biochemical and biological properties of these mutants had been described in preceding publications ( baier-bitterlich et al. , 1996 ; uberall et al. , 1997 ; kampfer et al. , 1998 ) .	none
+
+the following mabs were used ( if	method
+not stated otherwise , the mabs are products of the authors ' laboratories ) : cd59 ( mem-43 ) , cd18 ( mem-48 ) , cd25 ( aicd25.1 ) ,	result
+t cell receptor-interacting molecule ( trim ) -01 , phosphotyrosine ( p-tyr ) -01 and 4g10 , conjugated with horseradish peroxidase ( upstate biotechnology ) , flag ( m2 ; eastman kodak co. ) , myc ( 9e10 , a gift from dr. d. cantrell , imperial cancer research fund , london , uk ) , rabbit antisera to lck and fyn ( provided by dr. a. veillette ) , rabbit antiserum to lat ( provided by dr. l. samelson , national institute of child health and human development , nih , bethesda , md ; reference 13 ) , csk and g-proteins beta subunits ( rabbit abs from santa cruz biotechnology , inc. ) , mitogen-activated protein kinase ( rabbit antiserum from upstate biotechnology ) .	result
+horseradish peroxidase-conjugated polyclonal abs to mouse and rabbit ig were from bio-rad or dianova .	method
+
+however ,	result
+when cells were left for 3 h on fibronectin before fixing and staining , the homozygous cells remained well spread , with numerous focal adhesions scattered throughout the ventral surface of the cell ( fig. 3 h ) .	result
+surrounding the cells were small , hair-like actin fibers	result
+that characterize cells in the early stages of apolar migration ( fig. 3 g ) .	result
+the ptp-pest ( +/- ) cells , in contrast , were rounded , with well-defined edges and fewer focal contacts concentrated at the cell periphery ( fig. 3 , e and f ) .	result
+the ( -/- ) cells also contained a higher number of stress fibers , a state	result
+that is incompatible with cell migration .	implication
+a quantitative evaluation of the number of focal adhesions after 3 h ,	method
+as counted on vinculin-staining photographs , is shown in fig. 3 i .	method
+ptp-pest ( -/- ) cells have , on average , > 85 focal contacts per cell , compared with ~25 in a ( +/- ) cell .	result
+thus , the migration defect observed in the wound healing assay above may be in part due to disregulation of focal adhesion assembly and/or disassembly in the ptp-pest cell lines .	implication
+
+it has been confirmed	implication
+that the upstream promoter is basically driven by p53 [ 23 ] .	implication
+activity of the upstream promoter was almost inert in p53-deficient cells ( fig. 4a ) .	result
+moreover , tlp does not exhibit a transcription activation function for the upstream promoter in p53-null cells .	result
+we found	result
+that the upstream promoter is upregulated by tfiia and is dependent on tfiia in addition to p53 and tlp ( figs 3 and 4 ) .	result
+the results shown in figs 5 and 6 demonstrate that these three transcription factors are recruited to the upstream promoter	result
+and etoposide , which stimulates p21 gene expression , increased this recruitment .	result
+drosophila tlp works	fact
+as a cofactor for dref transcription factor of the pcna gene [ 13 ] .	fact
+moreover , tfiia can work	fact
+as a co-activator of several activators [ 33-36 ] and binds to p53 [ 37 ] .	fact
+we have observed intracellular binding of tlp and tfiia [ 29 ] .	result
+furthermore , we showed interaction between tlp and p53 [ 25 ] .	result
+we therefore speculate that tlp can form a triple complex with tfiia and p53 , and	hypothesis
+tlp and tfiia coordinately function as a binary co-activator complex for p53 on the p21 upstream promoter .	hypothesis
+the fact	result
+that the native , but not n37e , tlp stimulates the upstream promoter additively with tfiia ( fig. 3a-b ) supports this hypothesis .	result
+
+detection of protein-protein interactions has previously been a balance between specificity ( background reduction ) and affinity ( detection of weak interactions ) .	fact
+recently , the introduction of stable isotope labeling ,	result
+to distinguish specific from unspecific interaction partners ( blagoev et al , 2003 ; ranish et al , 2003 ) , has enabled detection of weak binders in the presence of high levels of background proteins ( see below ) .	method
+based on this principle , we have developed a proteomic screen for peptide motif-based interactions ( schulze and mann , 2004 ) .	method
+using synthetic peptide pairs in phosphorylated and unphosphorylated form	method
+pull-down experiments are performed to enrich specific binding partners to the phosphorylated bait peptides .	method
+these proteins are subsequently identified and quantified by mass spectrometry .	method
+in this study , by further method development , we greatly increased the throughput of the analysis allowing	method
+us to profile the entire phosphotyrosine interactome of the erbb-receptor family .	method
+
+efs were incubated with anti-ltbetar mab af.h6 19 or control mab ha4/8 .	method
+after	method
+washing twice with pbs , cells were incubated with fitc-conjugated anti-hamster igg mab ( clone g94-56 ; pharmingen ) .	method
+cells were analyzed with a facscaliber ( tm ) flow cytometer ( becton dickinson ) with cellquest ( tm ) software .	method
+mouse mab-producing hybridoma cells were used as negative control .	method
+
+gtr1 and gtr2 are unique members of the ras gtpase family in yeast22	fact
+that have a long c-terminal extension which is required for gtr1/gtr2 heterodimer formation23 , 24 .	fact
+in yeast , gtr1/gtr2 act in a multifunctional protein complex involved in nuclear transport regulation , intracellular protein trafficking , microautophagy , and exit from rapamycin-induced growth arrest22 , 24-26 .	fact
+raga and ragb are mammalian homologues of gtr1	fact
+while ragc and ragd are corresponding homologues of gtr227 , 28 .	fact
+although the physiological functions of rag family gtpases are largely unknown , raga and ragb can form heterodimers with ragc and ragd28	fact
+and rag complexes may functionally interact with ran to modulate nuclear transport22 , 29 .	fact
+here , we identify rag gtpases as novel regulators of torc1 in cultured mammalian cells and drosophila .	hypothesis
+our data indicate	implication
+that rag promotes cell growth and inhibits autophagy by activating torc1 in response to amino acid signals .	implication
+
+for construction of the double knockout strain pex5/14delta , the pex14 locus was replaced by the loxp-kanmx4-loxp cassette ( guldener et al. , 1996 ) .	method
+the pex14 deletion cassette was constructed by pcr with the primer set ku289 , 5'- ( gaaaactcaagtaaaacagagaagttgtaaggtgaataaggacgtacgctgcaggtcgac ) -3 ' and re24 , 5 ' - ( caatttcc gttaaaaaac taattac ttacatagaa ttgcgataggccactagtggatctg ) -3 ' with plasmid pug6 as template ( guldener et al. , 1996 ) .	method
+
+stimulation of cells by some growth factors like platelet derived growth factor ( pdgf ) , epidermal growth factor ( egf ) , or insulin has been shown	result
+to induce a reorganization of actin filaments by mediating actin polymerization at the plasma membrane , where actin filaments form a compact meshwork resulting in the formation of membrane ruffles and lamellipodia ( mellstrom et al. , 1988 ; ridley and hall , 1992 ; rankin and rozengurt , 1994 ) .	result
+actin filament organization underlying membrane ruffles appears to be mediated by rac as microinjection of a dn asn-17 rac-1 inhibits pdgf-induced membrane ruffles ,	result
+whereas the constitutively active ( ca ) val-12 rac-1 induces membrane ruffling and the formation of focal complexes ( ridley and hall , 1992 ; qiu et al. , 1995a , b ) .	result
+evidence for an implication of a lim kinase catalyzed	result
+phosphorylation of cofilin in rac-mediated reorganization of actin cytoskeleton has been presented ( arber et al. , 1998 ; yang et al. , 1998 ) .	result
+an additional form of actin filament organization is found in microspikes and filopodia	fact
+where small bundles of actin filaments are attached to focal complexes at the tips of the filopodia ( nobes and hall , 1995 ) .	fact
+actin filament organization in filopodia appears	implication
+to be regulated by cdc 42hs ( nobes and hall , 1995 ) .	implication
+
+the protein spot corresponding to pp80 was excised from the silver-stained two-dimensional gel and in-gel digested with trypsin as described 39 .	method
+tryptic peptides were extracted from the gel matrix by 5 % formic acid and acetonitrile	method
+and extracts were pooled and dried .	method
+the sample was redissolved in 5 % formic acid and analyzed by nanoelectrospray tandem mass spectrometry ( nano es ms/ms ) as described 40 .	method
+analyses were performed on a triple quadrupole mass spectrometer ( api iii ; pe sciex instruments ) equipped with the nanoelectrospray ion source developed at european molecular biology laboratory ( embl 41 ) .	method
+acquired tandem mass spectra were interpreted manually	method
+using applescript-based software developed at embl .	method
+searching against comprehensive protein and expressed sequence tag ( est )	method
+sequence databases was performed by peptidesearch v3.0 software developed at embl .	method
+
+our screen resulted in identification of the vast majority of expected direct interaction partners of the erbb family	result
+that bind through phosphotyrosines .	result
+among the few exceptions was plc-gamma , which	result
+we were unable to find as an interaction partner of y1197 of the egf receptor .	result
+this interaction has been described	method
+using immunoprecipitations and in vitro phosphopeptide competition and binding assays with cloned domains ( margolis et al , 1990 ; rotin et al , 1992 ) .	method
+the peptide-protein interaction assay as such is capable of identifying plc-gamma ,	method
+since we previously described such an interaction using an irs4 phosphopeptide as bait ( hinsby et al , 2004 ) .	method
+we also could not find the interaction of y1197 with ship1 ( keilhack et al , 1998 ) , or of y1248 of erbb2 with chk ( zrihan-licht et al , 1998 ) .	result
+binding constants of sh2 domains to phosphotyrosines are in the range of 50-500 nm ( pawson , 2004 ) ,	result
+while binding constants of certain ptb domains to the respective bait peptides can be as low as 2 mum to 10 mum ( yan et al , 2002 ) .	result
+the peptide-protein interaction screen was validated for binding constants as low as at least 5 mum ( schulze and mann , 2004 )	method
+but it is likely to work with much lower affinity interactions , too .	method
+thus , we believe	implication
+that the negative results are unlikely to be caused by low affinity of the interactions .	implication
+however , some interactions may not only be motif-dependent , but also require cooperative binding or activation of the binding partner .	implication
+
