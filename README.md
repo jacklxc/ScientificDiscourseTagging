@@ -1,6 +1,6 @@
 # Scientific Discourse Tagging
 
-Scientific discourse tagger implementation for EACL 2021 paper [Scientific Discourse Tagging for Evidence Extraction](https://arxiv.org/abs/1909.04758).
+Scientific discourse tagger implementation for EACL 2021 paper [Scientific Discourse Tagging for Evidence Extraction](https://arxiv.org/abs/1909.04758). There is a [video](https://www.youtube.com/watch?v=Z_xdAuJmU-Y) available!
 
 This is a discourse tagger that tags each clause in a given paragraph from a biomedical paper with 8 types of discourse types, such as "fact", "method", "result", "implication" etc. The paper will be available as soon as it's published.
 
