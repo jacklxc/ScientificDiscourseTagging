@@ -50,3 +50,15 @@ You can specify test files while training itself using `--test_files` arguments.
 python -u discourse_tagger_generator_bert.py --repfile REPFILE --test_file TESTFILE1 [TESTFILE2 ..] --use_attention --att_context LSTM_clause --bidirectional --crf --maxseqlen 40 --maxclauselen 60
 ```
 Make sure you use the same options for attention, context and bidirectional as you used for training.
+
+## Cite our paper
+Please use the following BibTeX to cite our paper:
+```
+@inproceedings{li2021scientific,
+  title={Scientific Discourse Tagging for Evidence Extraction},
+  author={Li, Xiangci and Burns, Gully and Peng, Nanyun},
+  booktitle={Proceedings of the 16th Conference of the European Chapter of the Association for Computational Linguistics: Main Volume},
+  pages={2550--2562},
+  year={2021}
+}
+```
