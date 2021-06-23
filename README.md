@@ -34,7 +34,14 @@ If you want to tag your own data, you can parse your sentences into clauses foll
 #### BERT embedding
 * Follow the instruction of [SciBERT](https://github.com/allenai/scibert), download the pretrained weights. Remeber to correct the file names to match the hard-coded name in BERT code.
 
-## Training
+## Saved checkpoints
+Trained SciBERT + LSTM-Attention + BiLSTM+CRF model:
+* [SciDT dataset](https://drive.google.com/file/d/1tPzuDfkSXS9fRSHHkvyrINR2U16k2q1d/view?usp=sharing)
+* [PubMed-RCT-20k dataset](https://drive.google.com/file/d/1DJVkTbor9px6zLAButYZS9L2r2-Koys_/view?usp=sharing)
+
+For each model, put the CONTENT of the decompressed content to the root directory of this repo.
+
+## Training from scratch
 ### SciBERT embedding
 ```
 python -u discourse_tagger_generator_bert.py --repfile REPFILE --train_file TRAINFILE --validation_file DEVFILE  --use_attention --att_context LSTM_clause --bidirectional --crf --save --maxseqlen 40 --maxclauselen 60
