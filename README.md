@@ -10,7 +10,7 @@ If you have any question, please contact lixiangci8@gmail.com.
 
 ## Requirements
 * Python 3
-* Tensorflow (tested with v1.12, either gpu or non-gpu version is fine)
+* Tensorflow (tested with v1.12, either gpu or non-gpu version is fine. If you encounter any issue, give a shot to v1.14)
 * Keras (tested with v2.2.4, either gpu or non-gpu version is fine)
 * Scikit-learn
 * Keras-bert
